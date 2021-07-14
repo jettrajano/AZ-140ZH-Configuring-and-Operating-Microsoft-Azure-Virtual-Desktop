@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：为 WVD 实现和管理存储 (Azure AD DS)'
     module: '模块 2：实现 WVD 基础结构'

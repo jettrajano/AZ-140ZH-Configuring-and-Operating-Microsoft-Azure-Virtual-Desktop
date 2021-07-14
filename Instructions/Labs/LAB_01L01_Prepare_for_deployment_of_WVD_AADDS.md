@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：准备部署 Azure Windows 虚拟桌面 (Azure AD DS)'
     module: '模块 1：规划 WVD 体系结构'

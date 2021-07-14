@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：打包 Windows 虚拟桌面应用程序 (AD DS)'
     module: '模块 4：管理用户环境和应用'

@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：使用 PowerShell 部署和管理主机池和主机'
     module: '模块 2：实现 WVD 基础结构'

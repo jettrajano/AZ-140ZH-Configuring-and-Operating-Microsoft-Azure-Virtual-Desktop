@@ -111,7 +111,7 @@ lab:
 
 > **备注**：在本实验室中，你将使用自签名证书。在生产环境中，应使用由公共证书颁发机构或内部证书颁发机构颁发的证书，具体取决于预期用途。
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，从 “管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以生成 “公用名称”** 属性设置为 **“Adatum”** 的自签名证书，并将该证书存储在 **“本地计算机”** 证书存储的 **“个人”** 文件夹中：
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，从 “管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以生成“公用名称”属性设置为 **“Adatum”** 的自签名证书，并将该证书存储在 **“本地计算机”** 证书存储的 **“个人”** 文件夹中：
 
    ```powershell
    New-SelfSignedCertificate -Type Custom -Subject "CN=Adatum" -KeyUsage DigitalSignature -KeyAlgorithm RSA -KeyLength 2048 -CertStoreLocation "cert:\LocalMachine\My"
@@ -153,14 +153,14 @@ lab:
 
 #### 任务 5：下载要打包的软件
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，并浏览到 **https://github.com/microsoft/XmlNotepad**。
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，并浏览到 **https://github.com/microsoft/XmlNotepad** 。
 1. 在 **microsoft/XmlNotepad** **readme.md** 页上，选择[可下载的独立安装程序](http://www.lovettsoftware.com/downloads/xmlnotepad/xmlnotepadsetup.zip)的下载链接，下载压缩的安装文件。
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动文件资源管理器，导航到 **“下载”** 文件夹，打开压缩文件，将其内容复制并粘贴到 **C:\\AllFiles\\Labs\\04\\** 目录。 
 
 #### 任务 6：安装 MSIX 打包工具
 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Store** 应用。
-1. 在 **Microsoft Store 应用中，搜索并选择 **“MSIX 打包工具”**，然后在 **“MSIX 打包工具”** 页上选择 **“获取”**。
+1. 在 **Microsoft Store** 应用中，搜索并选择 **“MSIX 打包工具”**，然后在 **“MSIX 打包工具”** 页上选择 **“获取”**。
 1. 在出现提示时，跳过登录，等待安装完成，选择 **“启动”**，然后在 **“发送诊断数据”** 对话框中选择 **“拒绝”**。 
 
 #### 任务 7：创建 MSIX 包
@@ -204,7 +204,7 @@ lab:
 1. 在 **“创建新包”** 向导的 **“服务报告”** 页上，验证未列出任何服务，然后选择 **“下一步”**。
 1. 在 **“创建新包”** 向导的 **“创建包”** 页上，在 **“保存位置”** 文本框中键入 **C:\\Allfiles\\Labs\\04\\XmlNotepad\XmlNotepad.msix**，然后单击 **“创建”**。
 1. 在 **“已成功创建包”** 对话框中，注意包的保存位置，并选择 **“关闭”**。
-1. 切换到 **“文件资源管理器”** 窗口，导航到 **C:\\Allfiles\\Labs\\04\\XmlNotepad** 文件夹，并验证其中包含 *.msix 和 *.xml 文件。
+1. 切换到“文件资源管理器”窗口，导航到 **C:\\Allfiles\\Labs\\04\\XmlNotepad** 文件夹，并验证其中包含 *.msix 和 *.xml 文件。
 1. 将 **XmlNotepad.msix** 文件复制到 **C:\\Allfiles\\Labs\\04** 文件夹。
 
 
@@ -256,7 +256,7 @@ lab:
 
 #### 任务 2：创建 MSIX 应用附加映像
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，浏览到 **https://aka.ms/msixmgr**，在系统提示选择是打开还是保存 **msixmgr.zip** 文件时，单击 **“保存”**。这会将 MSIX mgr 工具存档下载到 **“下载”**文件夹。
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，浏览到 **https://aka.ms/msixmgr** ，在系统提示选择是打开还是保存 **msixmgr.zip** 文件时，单击 **“保存”**。这会将 MSIX mgr 工具存档下载到 **“下载”** 文件夹。
 1. 在文件资源管理器中，导航到 **“下载”** 文件，打开压缩文件，并将 **x64** 文件夹的内容复制到 **C:\\AllFiles\\Labs\\04** 文件夹。 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以创建将用作 MSIX 应用附加映像的 VHD 文件：
 
@@ -332,7 +332,7 @@ lab:
    Get-ADGroup -Identity 'az140-hosts-42-p1' | Add-AdGroupMember -Members 'az140-21-p1-0$','az140-21-p1-1$','az140-21-p1-2$'
    ```
 
-1. 从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以重启属于 **“az140-hosts-42-p1”** 组成员的服务器：
+1. 从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以重启属于 'az140-hosts-42-p1' 组成员的服务器：
 
    ```powershell
    $hosts = (Get-ADGroup -Identity 'az140-hosts-42-p1' | Get-ADGroupMember | Select-Object Name).Name
@@ -352,13 +352,13 @@ lab:
 1. 查看 **“配置完成”** 页中的信息，然后选择 **“退出”** 关闭 **“Microsoft Azure Active Directory Connect”** 窗口。
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，启动 Microsoft Edge，导航到 [Azure 门户](https://portal.azure.com)。如果出现提示，请使用用户帐户的 Azure AD 凭据登录，该帐户应具有与本实验室所用 Azure 订阅关联的 Azure AD 租户的全局管理员角色。
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，在显示 Azure 门户的 Microsoft Edge 窗口中搜索并选择 **“Azure Active Directory”**，以导航到与本实验室中所用 Azure 订阅关联的 Azure AD 租户。
-1. 在 **“Azure Active Directory”** 边栏选项卡左侧垂直菜单中的 **“管理”** 部分，单击 **“组”**。 
+1. 在 “Azure Active Directory” 边栏选项卡左侧垂直菜单中的 **“管理”** 部分，单击 **“组”**。 
 1. 在 **“组 | 全部组”** 边栏选项卡的组列表中，选择 **“az140-hosts-42-p1”** 条目。
 
    > **备注**： 需要刷新页面以显示组。
 
 1. 在 **“az140-hosts-42-p1”** 边栏选项卡左侧垂直菜单中的 **“管理”** 部分中，单击 **“成员”**。
-1. 在 **“az140-hosts-42-p1 | 成员”** 边栏选项卡上，验证 **“直接成员”** 列表中包含你在本任务的稍早部分添加到组的 Azure 虚拟桌面池的三个主机。
+1. 在 **“az140-hosts-42-p1 | 成员”** 边栏选项卡上，验证“直接成员”列表中包含你在本任务的稍早部分添加到组的 Azure 虚拟桌面池的三个主机。
 
 #### 任务 2：为 MSIX 应用附加设置 Azure 文件存储共享
 
@@ -387,9 +387,9 @@ lab:
 
    |设置|值|
    |---|---|
-   |角色|存储文件数据 SMB 共享提升参与者|
-   |将访问权限分配到|用户、组或服务主体|
-   |选择|az140-wvd-admins|
+   |角色|**存储文件数据 SMB 共享提升参与者**|
+   |将访问权限分配到|**用户、组或服务主体**|
+   |选择|**az140-wvd-admins**|
 
    > **备注**： **az140-wvd-admins** 组包含将用于配置共享权限的 **wvdadmin1** 用户帐户。 
 
@@ -489,10 +489,10 @@ lab:
 #### 任务 5：验证 MSIX 应用附加的功能
 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 Microsoft Edge 并导航到 [Windows 桌面客户端下载页面](https://go.microsoft.com/fwlink/?linkid=2068602)，下载完成后，选择 **“打开文件”** 开始安装。在 **“远程桌面安装”** 向导的 **“安装范围”** 页上，选择 **“为此计算机的所有用户安装”** 选项，然后单击 **“安装”**。 
-1. 安装完成后，请确保 **“安装完成时启动远程桌面”** 复选框处于选中状态，然后单击 **“完成”** 以启动 **“远程桌面客户端”**。
+1. 安装完成后，请确保 **“安装完成时启动远程桌面”** 复选框处于选中状态，然后单击 **“完成”** 以启动“远程桌面客户端”。
 1. 在 **“远程桌面”** 客户端窗口中，选择 **“订阅”**，并在出现提示时使用用户主体名称 **“aduser1”** 和密码 **“Pa55w.rd1234”** 进行登录。
 1. 出现提示时，在 **“保持登录到所有应用”** 窗口中清除复选框 **“允许组织管理我的设备”**，然后单击 **“否，仅登录到此应用”**。
-1. 在 **“远程桌面”** 客户端窗口的 **“az140-21-ws1”** 部分中，双击 **“XML Notepad”** 图标，在出现提示时提供密码，然后验证 **XML Notepad** 是否成功启动。
+1. 在 **“远程桌面”** 客户端窗口的 **“az140-21-ws1”** 部分中，双击 **“XML Notepad”** 图标，在出现提示时提供密码，然后验证 XML Notepad 是否成功启动。
 
 
 ### 练习 4：停止并解除分配在实验室中预配和使用的 Azure VM
@@ -506,7 +506,7 @@ lab:
 #### 任务 1：解除分配在实验室中预配和使用的 Azure VM
 
 1. 切换到实验室计算机，然后在显示 Azure 门户的 Web 浏览器窗口中，打开 **“Cloud Shell”** 窗格内的 **“PowerShell”** shell 会话。
-1. 在 **“Cloud Shell”** 窗格中的 PowerShell 会话中，运行以下命令以列出本实验室中创建和使用的所有 Azure VM：
+1. 在 “Cloud Shell” 窗格中的 PowerShell 会话中，运行以下命令以列出本实验室中创建和使用的所有 Azure VM：
 
    ```powershell
    Get-AzVM -ResourceGroup 'az140-21-RG'

@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：使用 Azure 门户部署主机池和会话主机 (AD DS)'
     module: '模块 2：实现 AVD 基础结构'

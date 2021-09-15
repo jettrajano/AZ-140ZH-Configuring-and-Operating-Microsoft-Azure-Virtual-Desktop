@@ -8,7 +8,7 @@
 
 - 为了支持本课程，我们需要经常更新课程内容，以使其与课程中使用的 Azure 服务保持同步。  我们将在 GitHub 上发布实验室说明和实验室文件，以允许课程作者和 MCT 之间的开放式合著，从而让内容与 Azure 平台中的更改保持同步。
 
-- 我们希望能在这些实验室中引入前所未有的协作感：如果 Azure 发生更改，而你先在直播讲课时发现这一点，你可以直接在实验室源中进行改进。  这样可以帮助到其他 MCT。
+- 我们希望能在这些实验室中引入前所未有的协作感：如果 Azure 发生更改，而你首先在实时授课时发现这一点，则可以直接在实验室源中进行改进。  这样可以帮助到其他 MCT。
 
 ## 我应该如何使用与已发布 MOC 文件相关的这些文件？
 
@@ -30,6 +30,28 @@
 
 ## 备注
 
+**实验室包括两个独立的轨道，具体取决于你决定使用的标识提供者。**
+
+- Active Directory 域服务 (AD DS)。此轨道由以下实验室组成：
+
+   - LAB_01L01_Prepare_for_deployment_of_AVD_ADDS.md
+   - LAB_02L01_Deploy_host_pools_and_session_hosts_with_the_Azure_portal_ADDS.md
+   - LAB_02L02_Implement_and_manage_storage_for_AVD_ADDS.md
+   - LAB_02L03_Deploy_host_pools_and_hosts_with_ARM_templates_ADDS.md
+   - LAB_02L04_Deploy_and_manage_host_pools_and_hosts_with_PowerShell_ADDS.md
+   - LAB_02L05_Create_and_manage_session_host_images_ADDS.md
+   - LAB_03L01_Configure_Conditional_Access_policies_for_AVD_ADDS.md
+   - LAB_04L01_Implement_and_manage_AVD_profiles_ADDS.md
+   - LAB_04L02_Package_AVD_applications_ADDS.md
+   - LAB_05L01_Implement_autoscaling_in_host_pools_ADDS.md
+
+- Azure Active Directory 域服务 (Azure AD DS)。此轨道由以下实验室组成：
+
+   - LAB_01L01_Prepare_for_deployment_of_AVD_AADDS.md
+   - LAB_02L01_Create_and_configure_host_pools_and_session_hosts_AADDS.md
+   - LAB_02L02_Implement_and_manage_storage_for_AVD_AADDS.md
+   - LAB_04L01_Implement_and_manage_AVD_profiles_AADDS.md
+
 ### 课堂材料
 
-强烈建议 MCT 和合作伙伴查看这些材料，然后将它们分别提供给学生。  如果在课程中直接让学生访问 GitHub 来查看实验室步骤，将需要学生访问另一个 UI，这样更容易使其迷惑不解。向学生解释他们收到单独实验室说明的原因，这可以突显基于云的界面和平台具有不断变化的性质。Microsoft Learning 仅支持讲授此课程的 MCT 访问 GitHub 上的文件以及导航 GitHub 站点。
+强烈建议 MCT 和合作伙伴依次查看这些材料，然后将它们分别提供给学生。  如果在课程中直接让学生访问 GitHub 来查看实验室步骤，将需要学生访问另一个 UI，这样更容易使其迷惑不解。向学生解释他们收到单独实验室说明的原因，这可以突显基于云的界面和平台具有不断变化的性质。仅为讲授此课程的 MCT 提供有关访问 GitHub 上的文件以及导航 GitHub 网站的 Microsoft Learning 支持。

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: '实验室：为 AVD 实现和管理存储 (AD DS)'
+    title: '实验室：实现和管理 AVD 的存储 (AD DS)'
     module: '模块 2：实现 AVD 基础结构'
 ---
 
@@ -87,7 +87,7 @@ lab:
 
 #### 任务 3：为 Azure 存储帐户启用 AD DS 身份验证 
 
-1. 在 **az140-dc-vm11** 的远程桌面会话中的 Microsoft Edge 窗口中打开另一个选项卡，导航到 [Azure 文件存储示例 GitHub 存储库](https://github.com/Azure-Samples/azure-files-samples/releases)，下载 [压缩的 **AzFilesHybid.zip** PowerShell 模块的最新版本，将其内容解压缩到 **C:\\Allfiles\\Labs\\02** 文件夹（如果需要，请创建文件夹）中。
+1. 在与 **az140-dc-vm11** 的远程桌面会话中，在 Microsoft Edge 窗口中打开一个新标签页，导航到[Azure 文件存储示例 GitHub 存储库](https://github.com/Azure-Samples/azure-files-samples/releases)，下载最新版本的压缩“**AzFilesHybrid.zip**”PowerShell 模块，并将内容解压缩到 **C:\\Allfiles\\Labs\\02** 文件夹（如有需要，请创建该文件夹）。
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，以管理员的身份启动 **Windows PowerShell ISE**，然后从 **“管理员: Windows PowerShell ISE”** 脚本窗格中，运行以下命令以删除 **Zone.Identifier** 备用数据流，该数据流具有一个值 **3**，指示其是从 Internet 下载的：
 
    ```powershell

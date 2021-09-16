@@ -127,11 +127,12 @@ lab:
    |子网|**hp1-Subnet (10.0.1.0/24)**|
    |网络安全组|**基本**|
    |公共入站端口|**否**|
+   |选择要加入的目录|**Active Directory**|
+   |AD 域加入 UPN|**student@adatum.com**|
+   |密码|**Pa55w.rd1234**|
    |指定域或单元|**是**|
    |要加入的域|**adatum.com**|
    |组织单位路径|**OU=WVDInfra,DC=adatum,DC=com**|
-   |AD 域加入 UPN|**student@adatum.com**|
-   |密码|**Pa55w.rd1234**|
    |用户名|**Student**|
    |密码|Pa55w.rd1234|
    |确认密码|Pa55w.rd1234|

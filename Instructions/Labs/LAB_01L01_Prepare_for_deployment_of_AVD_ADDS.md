@@ -349,7 +349,7 @@ lab:
    $domainUsers | foreach {$newUpn = $_.UserPrincipalName.Replace('adatum.com',$aadDomainName); $_ | Set-ADUser -UserPrincipalName $newUpn}
    ```
 
-1. 从 **“管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以将 **adatum.com** UPN 后缀分配给**学生**域用户：
+1. 从 **“管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以将 **adatum.com** UPN 后缀分配给**Student**域用户：
 
    ```powershell
    $domainAdminUser = Get-ADUser -Filter {sAMAccountName -eq 'Student'} -Properties userPrincipalName
@@ -389,7 +389,7 @@ lab:
 
 #### 任务 4：安装 Azure AD Connect
 
-1. 在与 az140-dc-vm11 的远程桌面会话中，从“管理员:********Windows PowerShell ISE”脚本窗格中运行以下代码，以启用 TLS 1.2****：
+1. 在与 **az140-dc-vm11** 的远程桌面会话中，从“**管理员:Windows PowerShell ISE**”脚本窗格中运行以下代码，以启用 TLS 1.2：
 
    ```powershell
    New-Item 'HKLM:\SOFTWARE\WOW6432Node\Microsoft.NETFramework\v4.0.30319' -Force | Out-Null

@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：创建和管理会话主机映像 (AD DS)'
     module: '模块 2：实现 WVD 基础结构'
@@ -97,9 +97,9 @@ lab:
    Start-Process -FilePath 'C:\Allfiles\Labs\02\x64\Release\FSLogixAppsSetup.exe' -ArgumentList '/quiet' -Wait
    ```
 
-   > **备注**： 请等待安装完成。这大约需要 1 分钟。
+   > **备注**：请等待安装完成。这大约需要 1 分钟。若安装触发重启，请重新连接到 **az140-25-vm0**。
 
-   > **备注**：接下来，将安装 Microsoft Teams 并进行配置。
+   > **备注**：接下来，你将逐步安装并配置 Microsoft Teams（出于学习目的，因为 Teams 已经存在于本实验室使用的映像中）。
 
 1. 在与 **az140-25-vm0** 的远程桌面会话中，右键单击 **“开始”**，在右键单击菜单中，选择 **“运行”**，在 **“运行”** 对话框的 **“打开”** 文本框中，键入 **“cmd”** 并按 **Enter** 键，以启动 **“命令提示符”**。
 1. 在 **“管理员: C:\windows\system32\cmd.exe”** 窗口中，从命令提示符运行以下命令以准备按计算机安装 Microsoft Teams：
@@ -127,7 +127,7 @@ lab:
 
    > **备注**： 此安装程序支持 ALLUSER=1 和 ALLUSERS=1 参数。ALLUSER=1 参数用于在 VDI 环境中的按计算机安装。ALLUSERS=1 参数可用于非 VDI 环境和 VDI 环境。 
 
-1. 在与 **az140-25-vm0** 的远程桌面会话中，切换到 **“管理员: Windows PowerShell ISE”** 窗口，然后从 **“管理员: Windows PowerShell ISE”** 控制台，运行以下命令安装 Microsoft Edge Chromium：
+1. 在与 **az140-25-vm0** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从“**管理员: Windows PowerShell ISE**”控制台中运行以下命令，以安装 Microsoft Edge Chromium（出于学习目的，因为 Microsoft Edge 已存在于本实验室使用的映像中）：
 
    ```powershell
    Start-BitsTransfer -Source "https://aka.ms/edge-msi" -Destination 'C:\Allfiles\Labs\02\MicrosoftEdgeEnterpriseX64.msi'

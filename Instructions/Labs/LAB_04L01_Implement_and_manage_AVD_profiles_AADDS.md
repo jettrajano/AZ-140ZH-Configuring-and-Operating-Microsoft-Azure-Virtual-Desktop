@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：实现和管理 Azure 虚拟桌面配置文件 (Azure AD DS)'
     module: '模块 4：管理用户环境和应用'
@@ -41,6 +41,7 @@ lab:
 1. 在 Azure 虚拟桌面会话主机 VM 上配置本地管理员组
 1. 在 Azure 虚拟桌面会话主机 VM 上配置基于 FSLogix 的配置文件
 1. 在 Azure 虚拟桌面中测试基于 FSLogix 的配置文件
+1. 删除 Azure 实验室资源
 
 #### 任务 1：在 Azure 虚拟桌面会话主机 VM 上配置本地管理员组
 
@@ -88,7 +89,7 @@ lab:
 
 1. 在与 **az140-21-p1-0** 的远程桌面会话中，启动 Microsoft Edge，浏览到 [FSLogix 下载页](https://aka.ms/fslogix_download)，下载 FSLogix 压缩安装二进制文件，将其解压缩到 **C:\\Source** 文件夹中，导航到 **x64\\Release** 子文件夹并使用 **FSLogixAppsSetup.exe** 以默认设置安装 Microsoft FSLogix 应用。
 
-   > **备注**： 可能不需要安装 FXLogic，具体取决于映像是否已包含它。
+   > **备注**：可能不需要安装 FXLogic，具体取决于映像是否已包含它。需要重启才可完成 FX Logix 安装。
 
 1. 在与 **az140-21-p1-0** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格运行以下脚本，以安装最新版本的 PowerShellGet 模块（如果提示确认，请选择 **“是”**）：
 
@@ -213,3 +214,8 @@ lab:
 1. 在 **“存储帐户”** 边栏选项卡上的 **“文件服务”** 部分，选择 **“文件共享”**，然后在文件共享列表中选择 **“az140-22a-profiles”**。 
 1. 在 **“az140-22a-profiles”** 边栏选项卡上，验证其内容是否包含一个文件夹，该文件夹名称由 **“ADATUM\aduser1”** 帐户的安全标识符 (SID) 和 **“_aaduser1”** 后缀组成。
 1. 选择你在上一步中标识的文件夹，注意它包含一个名为 **“Profile_aduser1.vhd”** 的文件。
+
+#### 任务 4：删除 Azure 实验室资源
+
+1. 按照[使用 Azure 门户删除 Azure Active Directory 域服务托管域](https://docs.microsoft.com/zh-cn/azure/active-directory-domain-services/delete-aadds)中的说明删除 Azure AD DS 部署。
+1. 按照 [Azure 资源管理器资源组和资源删除](https://docs.microsoft.com/zh-cn/azure/azure-resource-manager/management/delete-resource-group?tabs=azure-portal) 中的说明删除在本课程的 Azure AD DS 实验室中预配的所有 Azure 资源组。

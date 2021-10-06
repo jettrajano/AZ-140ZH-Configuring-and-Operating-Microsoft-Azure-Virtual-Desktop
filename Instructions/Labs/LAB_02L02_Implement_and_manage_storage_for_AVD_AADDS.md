@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：实现和管理 AVD 的存储 (Azure AD DS)'
     module: '模块 2：实现 AVD 基础结构'

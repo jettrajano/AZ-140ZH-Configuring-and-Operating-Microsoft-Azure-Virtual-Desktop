@@ -111,7 +111,7 @@ lab:
 
 > **备注**：在本实验室中，你将使用自签名证书。在生产环境中，应使用由公共证书颁发机构或内部证书颁发机构颁发的证书，具体取决于预期用途。
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，从 “管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以生成“公用名称”属性设置为 **“Adatum”** 的自签名证书，并将该证书存储在 **“本地计算机”** 证书存储的 **“个人”** 文件夹中：
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以生成“公用名称”属性设置为 **“Adatum”** 的自签名证书，并将该证书存储在 **“本地计算机”** 证书存储的 **“个人”** 文件夹中：
 
    ```powershell
    New-SelfSignedCertificate -Type Custom -Subject "CN=Adatum" -KeyUsage DigitalSignature -KeyAlgorithm RSA -KeyLength 2048 -CertStoreLocation "cert:\LocalMachine\My"

@@ -142,42 +142,46 @@ lab:
 1. 在 **“本地用户和组”** 控制台的组列表中，双击 **“FSLogix Profile Include List”** 组，注意它包括 **“\Everyone”** 组，然后选择 **“确定”** 关闭组 **“属性”** 窗口。 
 1. 在 **“本地用户和组”** 控制台的组列表中，双击 **“FSLogix Profile Exclude List”** 组，注意其中默认不包含任何组成员，选择 **“确定”** 关闭组 **“属性”** 窗口。 
 
-   > **备注**： 为了提供一致的用户体验，需要在所有 Azure 虚拟桌面会话主机上安装和配置 FSLogix 组件。你将在我们实验室环境中的另一个会话主机上以无人看管的方式执行此任务。 
+   > **备注**：为了提供一致的用户体验，需要在所有 Azure 虚拟桌面会话主机上安装和配置 FSLogix 组件。你将在我们实验室环境中的其他会话主机上以无人参与的方式执行此任务。 
 
-1. 在与 **az140-21-p1-0** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格运行以下脚本，以在 **“az140-21-p1-1”** 会话主机上安装 FSLogix 组件：
+1. 在与 **az140-21-p1-0** 的远程桌面会话中，从“**管理员: Windows PowerShell ISE**”脚本窗格中运行以下命令，以在“**az140-21-p1-1**”和“**az140-21-p1-2**”会话主机上安装 FSLogix 组件：
 
    ```powershell
-   $server = 'az140-21-p1-1' 
-   $localPath = 'C:\Allfiles\Labs\04\x64'
-   $remotePath = "\\$server\C$\Allfiles\Labs\04\x64\Release"
-   Copy-Item -Path $localPath\Release -Destination $remotePath -Filter '*.exe' -Force -Recurse
-   Invoke-Command -ComputerName $server -ScriptBlock {
-      Start-Process -FilePath $using:localPath\Release\FSLogixAppsSetup.exe -ArgumentList '/quiet' -Wait
-   } 
+   $servers = 'az140-21-p1-1', 'az140-21-p1-2'
+   foreach ($server in $servers) {
+      $localPath = 'C:\Allfiles\Labs\04\x64'
+      $remotePath = "\\$server\C$\Allfiles\Labs\04\x64\Release"
+      Copy-Item -Path $localPath\Release -Destination $remotePath -Filter '*.exe' -Force -Recurse
+      Invoke-Command -ComputerName $server -ScriptBlock {
+         Start-Process -FilePath $using:localPath\Release\FSLogixAppsSetup.exe -ArgumentList '/quiet' -Wait
+      } 
+   }
    ```
 
    > **备注**： 等待脚本执行完成。该过程大约需要 2 分钟。
 
-1. 在与 **az140-21-p1-0** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格运行以下脚本，以在 **“az140-21-p1-1”** 会话主机上配置配置文件注册表设置：
+1. 在与 **az140-21-p1-0** 的远程桌面会话中，从“**管理员: Windows PowerShell ISE**”脚本窗格中运行以下命令，以在“**az140-21-p1-1**”和“**az140-21-p1-2**”会话主机上配置配置文件注册表设置：
 
    ```powershell
    $profilesParentKey = 'HKLM:\SOFTWARE\FSLogix'
    $profilesChildKey = 'Profiles'
    $fileShareName = 'az140-22-profiles'
-   Invoke-Command -ComputerName $server -ScriptBlock {
-      New-Item -Path $using:profilesParentKey -Name $using:profilesChildKey –Force
-      New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'Enabled' -PropertyType DWord -Value 1
-      New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'VHDLocations' -PropertyType MultiString -Value "\\$using:storageAccountName.file.core.windows.net\$using:fileShareName"
+   foreach ($server in $servers) {
+      Invoke-Command -ComputerName $server -ScriptBlock {
+         New-Item -Path $using:profilesParentKey -Name $using:profilesChildKey –Force
+         New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'Enabled' -PropertyType DWord -Value 1
+         New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'VHDLocations' -PropertyType MultiString -Value "\\$using:storageAccountName.file.core.windows.net\$using:fileShareName"
+      }
    }
    ```
 
    > **备注**： 在测试基于 FSLogix 的配置文件功能之前，需要从上一个实验室中使用的 Azure 虚拟桌面会话主机中删除将用于测试的 **ADATUM\aduser1** 帐户的本地缓存配置文件。
 
-1. 在与 **az140-21-p1-0** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格运行以下脚本，以在充当会话主机的两个 Azure VM 上删除 **“ADATUM\\aduser1”** 帐户的本地缓存配置文件：
+1. 在与 **az140-21-p1-0** 的远程桌面会话中，从“**管理员: Windows PowerShell ISE**”脚本窗格中运行以下命令，以删除用作会话主机的所有 Azure VM 上 **ADATUM\aduser1** 帐户的本地缓存配置文件：
 
    ```powershell
    $userName = 'aduser1'
-   $servers = 'az140-21-p1-0','az140-21-p1-1'
+   $servers = 'az140-21-p1-0','az140-21-p1-1', 'az140-21-p1-2'
    Get-CimInstance -ComputerName $servers -Class Win32_UserProfile | Where-Object { $_.LocalPath.split('\')[-1] -eq $userName } | Remove-CimInstance
    ```
 

@@ -229,7 +229,7 @@ lab:
 #### 任务 3：配置 Azure AD DS 部署的网络和标识设置
 
 1. 在实验室计算机显示的 Azure 门户中，搜索并选择 **“Azure AD 域服务”**，然后从 **“Azure AD 域服务”** 边栏选项卡上选择 **“adatum.com”** 条目，以导航到新预配的 Azure AD DS 实例。 
-1. 在 Azure AD DS 实例的 **“adatum.com”** 边栏选项卡上，单击以 **“检测到托管域配置问题”** 开头的警告。 
+1. 在 Azure AD DS 实例的“**adatum.com**”边栏选项卡上，单击以“**检测到托管域配置问题**”开头的警告。 
 1. 在 **“adatum.com | 配置诊断(预览)”**  边栏选项卡上，单击 **“运行”**。
 1. 在 **“验证”** 部分，展开 **“DNS 记录”** 窗格并单击 **“修复”**。
 1. 在 **“DNS 记录”** 边栏选项卡上，再次单击 **“修复”**。
@@ -342,7 +342,7 @@ lab:
 #### 任务 3：创建将同步到 Azure AD DS 的 AD DS 用户和组
 
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，启动 Microsoft Edge，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供 **aadadmin1** 用户帐户的用户主体名称并将 **Pa55w.rd1234** 作为其密码进行登录。
-1. 在 Azure 门户中，在 **Cloud Shell** 中打开 PowerShell 会话。
+1. 在 Azure 门户中打开 **Cloud Shell**。
 1. 当提示你选择 **“Bash”** 或 **“PowerShell”** 时，选择 **“PowerShell”**。 
 
    >**备注**： 由于这是第一次使用 **aadadmin1**  用户帐户启动 **Cloud Shell**，因此需要配置其 Cloud Shell 主目录。当出现消息 **“未安装存储”** 时，请选择你在本实验室中使用的订阅，然后选择 **“创建存储”**。 

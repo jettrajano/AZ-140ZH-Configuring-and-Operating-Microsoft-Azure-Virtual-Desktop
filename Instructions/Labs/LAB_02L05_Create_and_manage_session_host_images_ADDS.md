@@ -68,7 +68,7 @@ lab:
      -TemplateParameterFile $HOME/az140-25_azuredeployvm25.parameters.json
    ```
 
-   > **备注**：等待部署完成，再继续进行下一个练习。部署可能需要大约 10 分钟。
+   > **备注**：等待部署完成后，再继续下一个练习。部署可能需要大约 10 分钟。
 
 #### 任务 2：配置 Azure 虚拟桌面主机映像
 

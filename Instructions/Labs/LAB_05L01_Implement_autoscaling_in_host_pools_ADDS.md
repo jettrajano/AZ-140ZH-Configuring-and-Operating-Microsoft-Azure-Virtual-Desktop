@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：在主机池中实现自动缩放 (AD DS)'
     module: '模块：监视和维护 WVD 基础结构'
@@ -107,7 +107,7 @@ lab:
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格运行以下脚本，以创建将在本实验室中使用的 Azure Log Analytics 工作区：
 
    ```powershell
-   New-AzOperationalInsightsWorkspace -Location $location -Name $workspaceName -Sku Standard -ResourceGroupName $resourceGroupName
+   New-AzOperationalInsightsWorkspace -Location $location -Name $workspaceName -ResourceGroupName $resourceGroupName
    ```
 
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”**，打开 **“C:\\Allfiles\\Labs\\05\\CreateOrUpdateAzAutoAccount.ps1”** 脚本，并将第 **82** 和 **86** 行之间的代码包含在多行注释中，如下所示：
@@ -266,7 +266,7 @@ lab:
 >**备注**：要分析自动缩放和任何其他 Azure 虚拟桌面事件，可以使用 Log Analytics。
 
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，在显示 Azure 门户的“Microsoft Edge”窗口中，搜索并选择 **“Log Analytics 工作区”**，然后在 **“Log Analytics 工作区”** 边栏选项卡上，选择代表本实验室使用的 Azure Log Analytics 工作区条目（名称以 **az140-workspace-51** 前缀开头）。
-1. 在 **“Log Analytics 工作区”** 边栏选项卡左侧垂直菜单的 **“常规”** 部分中，单击 **“日志”**，然后在 **“欢迎使用 Log Analytics”** 窗格中，单击 **“开始”**。
+1. 在“**Log Analytics 工作区**”边栏选项卡左侧垂直菜单的“**常规**”部分中，单击“**日志**”，根据需要关闭“**欢迎使用 Log Analytics**”窗口，然后转到“**查询**”窗格。
 1. 在 **“查询”** 窗格左侧的 **“所有查询”** 垂直菜单中，选择 **“Azure 虚拟桌面”** 并查看预定义的查询。
 1. 关闭 **“查询”** 窗格。这将自动显示 **“新建查询 1”** 选项卡。
 1. 在 **“查询”** 窗口中，粘贴以下查询，单击“运行”以显示本实验室中使用的主机池的所有事件：
@@ -306,6 +306,8 @@ lab:
    | where logmessage_s contains "ERROR:" or logmessage_s contains "WARN:"
    | project TimeStampUTC = TimeGenerated, TimeStampLocal = TimeStamp_s, HostPool = hostpoolName_s, LineNumAndMessage = logmessage_s, AADTenantId = TenantId
    ```
+
+>**备注**：请忽略有关 `TenantId` 的错误消息
 
 ### 练习 3：停止并解除分配在实验室中预配的 Azure VM
 

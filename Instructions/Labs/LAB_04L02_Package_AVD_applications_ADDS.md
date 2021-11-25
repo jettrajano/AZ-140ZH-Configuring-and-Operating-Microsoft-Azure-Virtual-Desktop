@@ -155,7 +155,7 @@ lab:
 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，并浏览到 **https://github.com/microsoft/XmlNotepad** 。
 1. 在 **microsoft/XmlNotepad** **readme.md** 页上，选择[可下载的独立安装程序](http://www.lovettsoftware.com/downloads/xmlnotepad/xmlnotepadsetup.zip)的下载链接，下载压缩的安装文件。
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动文件资源管理器，导航到 **“下载”** 文件夹，打开压缩文件，将其内容复制并粘贴到 **C:\\AllFiles\\Labs\\04\\** 目录。 
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动文件资源管理器，导航到“**下载**”文件夹，打开压缩文件，将压缩文件的文件夹中的内容复制并粘贴到 **C:\\AllFiles\\Labs\\04\\** 目录。 
 
 #### 任务 6：安装 MSIX 打包工具
 
@@ -257,7 +257,7 @@ lab:
 
 #### 任务 2：创建 MSIX 应用附加映像
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，浏览到 **https://aka.ms/msixmgr** ，在系统提示选择是打开还是保存 **msixmgr.zip** 文件时，单击 **“保存”**。这会将 MSIX mgr 工具存档下载到 **“下载”** 文件夹。
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，并浏览到 **https://aka.ms/msixmgr**。 这会将 **msixmgr.zip** 文件（MSIX mgr 工具存档）自动下载到“**下载**”文件夹。
 1. 在文件资源管理器中，导航到 **“下载”** 文件，打开压缩文件，并将 **x64** 文件夹的内容复制到 **C:\\AllFiles\\Labs\\04** 文件夹。 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以创建将用作 MSIX 应用附加映像的 VHD 文件：
 
@@ -280,6 +280,8 @@ lab:
    Format-Volume -FileSystem NTFS -Confirm:$false -DriveLetter $partition.DriveLetter -Force
    ```
 
+   > **备注**：如果出现弹出窗口，提示格式化 F: drive，请选择“**取消**”。
+
 1. 从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以创建将托管 MSIX 文件的文件夹结构，并将你在上一个任务中创建的 MSIX 包解压缩到其中：
 
    ```powershell
@@ -289,7 +291,7 @@ lab:
    .\msixmgr.exe -Unpack -packagePath .\$appName.msix -destination "$($partition.DriveLetter):\Apps" -applyacls
    ```
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，在文件资源管理器中导航到 **F:\\Apps** 文件夹并查看其内容。
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，在文件资源管理器中导航到 **F:\\Apps** 文件夹并查看其内容。如果系统提示获取对该文件夹的访问权限，请选择“**继续**”。
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 控制台中运行以下命令，以卸载将用作 MSIX 映像的 VHD 文件：
 
    ```powershell
@@ -440,7 +442,6 @@ lab:
 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，在显示 Azure 门户的 Microsoft Edge 窗口中，搜索并选择 **“Azure 虚拟桌面”**，在 **“Azure 虚拟桌面”** 边栏选项卡左侧垂直菜单的 **“管理”** 部分中，选择 **“主机池”**。
 1. 在 **“Azure 虚拟桌面 \| 主机池”** 边栏选项卡的主机池列表中，选择 **“az140-21-hp1”** 条目。
-1. 在 **“az140-21-hp1”** 主机池条目左侧垂直菜单中的 **“设置”** 部分，选择 **“属性”**。
 1. 在 **“az140-21-hp1 \| 属性”** 边栏选项卡左侧垂直菜单中的 **“管理”** 部分，选择 **“MSIX 包”**。
 1. 在 **“az140-21-hp1 \| MSIX 包”** 边栏选项卡上，单击 **“+ 添加”**。
 1. 在 **“添加 MSIX 包”** 边栏选项卡上的 **“MSIX 映像路径”** 文本框中，输入 **XmlNotepad.vhd** 文件的路径，格式为 `\\<storage-account-name>.file.core.windows.net\az140-42-msixvhds \packages\XmlNotepad.vhd`（将占位符 `<storage-account-name>` 替换为托管 **az140-42-msixvhds** 文件共享的存储帐户的名称），然后单击 **“添加”**。

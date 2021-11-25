@@ -129,6 +129,9 @@ lab:
 #### 任务 1：识别 Azure VM 部署的可用 DNS 名称
 
 1. 在实验室计算机上，启动 Web 浏览器，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
+1. 在显示 Azure 门户的 Web 浏览器中，导航到 Azure AD 租户的“**概述**”边栏选项卡，并在左侧垂直菜单的“**管理**”部分中，单击“**属性**”。
+1. 在 Azure AD 租户的“**属性**”边栏选项卡的最底部，选择“**管理安全默认值**”链接。
+1. 如有需要，在“**启用安全默认值**”边栏选项卡上，选择“**否**”，选中“**我的组织正在使用条件访问**”复选框，然后选择“**保存**”。
 1. 在 Azure 门户中，通过选择搜索文本框右侧的“工具栏”图标，打开 **“Cloud Shell”** 窗格。
 1. 提示选择 **“Bash”** 或 **“PowerShell”** 时，选择 **“PowerShell”**。 
 
@@ -176,7 +179,7 @@ lab:
 
 #### 任务 3：使用 Azure 资源管理器快速启动模板部署运行 Windows 10 的 Azure VM
 
-1. 在实验室计算机上，在显示 Azure 门户的 Web 浏览器中，从“Cloud Shell”窗格中的 PowerShell 会话运行以下命令，将名为 **cl-Subnet** 的子网添加到在上一个任务中创建的名为 **az140-adds-vnet11** 的虚拟网络中：
+1. 在实验室计算机上，在显示 Azure 门户的 Web 浏览器中，在“Cloud Shell”窗格中打开 PowerShell 会话，并运行以下命令，将名为 **cl-Subnet** 的子网添加到在上一个任务中创建的名为 **az140-adds-vnet11** 的虚拟网络中：
 
    ```powershell
    $resourceGroupName = 'az140-11-RG'
@@ -394,7 +397,7 @@ lab:
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，从“**管理员:Windows PowerShell ISE**”脚本窗格中运行以下代码，以启用 TLS 1.2：
 
    ```powershell
-   New-Item 'HKLM:\SOFTWARE\WOW6432Node\Microsoft.NETFramework\v4.0.30319' -Force | Out-Null
+   New-Item 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319' -Force | Out-Null
    New-ItemProperty -path 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319' -name 'SystemDefaultTlsVersions' -value '1' -PropertyType 'DWord' -Force | Out-Null
    New-ItemProperty -path 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v4.0.30319' -name 'SchUseStrongCrypto' -value '1' -PropertyType 'DWord' -Force | Out-Null
    New-Item 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319' -Force | Out-Null

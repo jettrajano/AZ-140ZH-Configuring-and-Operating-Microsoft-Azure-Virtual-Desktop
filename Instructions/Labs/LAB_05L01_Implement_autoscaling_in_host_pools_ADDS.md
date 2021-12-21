@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：在主机池中实现自动缩放 (AD DS)'
     module: '模块：监视和维护 WVD 基础结构'
@@ -59,12 +59,12 @@ lab:
 
 1. 在实验室计算机上，启动 Web 浏览器，导航至 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
 1. 在 Azure 门户中，搜索并选择 **“虚拟机”**，然后在 **“虚拟机”** 边栏选项卡中，选择 **“az140-dc-vm11”**。
-1. 在 **“az140-dc-vm11”** 边栏选项卡中，选择 **“连接”**，在下拉菜单中选择 **“RDP”**，在 **“az140-dc-vm11 \| 连接”** 边栏选项卡的 **“RDP”** 选项卡上，在 **“IP 地址”** 下拉列表中选择 **“负载均衡器 DNS 名称”** 条目，然后选择 **“下载 RDP 文件”**。
-1. 系统出现提示时，请使用以下凭据登录：
+1. 在“**az140-dc-vm11**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-dc-vm11 \| 连接**”边栏选项卡的“**Bastion**”选项卡上，选择“**使用 Bastion**”。
+1. 出现提示时，请提供以下凭据并选择“**连接**”：
 
    |设置|值|
    |---|---|
-   |用户名|**ADATUM\\Student**|
+   |用户名|**Student**|
    |密码|**Pa55w.rd1234**|
 
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**。
@@ -208,26 +208,26 @@ lab:
 
    ```powershell
    $Params = @{
-     "AADTenantId"                   = $AADTenantId                             # Optional.如果未指定，它将使用当前 Azure 上下文
-     "SubscriptionID"                = $AzSubscription.Id                       # 可选。如果未指定，它将使用当前 Azure 上下文
-     "ResourceGroupName"             = $ResourceGroup.ResourceGroupName         # 可选。Default: "WVDAutoScaleResourceGroup"
-     "Location"                      = $ResourceGroup.Location                  # 可选。Default: "West US2"
+     "AADTenantId"                   = $AADTenantId                             # Optional. If not specified, it will use the current Azure context
+     "SubscriptionID"                = $AzSubscription.Id                       # Optional. If not specified, it will use the current Azure context
+     "ResourceGroupName"             = $ResourceGroup.ResourceGroupName         # Optional. Default: "WVDAutoScaleResourceGroup"
+     "Location"                      = $ResourceGroup.Location                  # Optional. Default: "West US2"
      "UseARMAPI"                     = $true
      "HostPoolName"                  = $WVDHostPool.Name
-     "HostPoolResourceGroupName"     = $WVDHostPool.ResourceGroupName           # Optional.Default: same as ResourceGroupName param value
-     "LogAnalyticsWorkspaceId"       = $LogAnalyticsWorkspaceId                 # 可选。如果未指定，脚本将不会登录到 Log Analytics
-     "LogAnalyticsPrimaryKey"        = $LogAnalyticsPrimaryKey                  # 可选。如果未指定，脚本将不会登录到 Log Analytics
-     "ConnectionAssetName"           = $AutoAccountConnection.Name              # 可选。Default: "AzureRunAsConnection"
-     "RecurrenceInterval"            = $RecurrenceInterval                      # 可选。Default: 15
-     "BeginPeakTime"                 = $BeginPeakTime                           # 可选。Default: "9:00"
-     "EndPeakTime"                   = $EndPeakTime                             # 可选。Default: "17:00"
-     "TimeDifference"                = $TimeDifference                          # 可选。Default: "-7:00"
-     "SessionThresholdPerCPU"        = $SessionThresholdPerCPU                  # 可选。Default: 1
-     "MinimumNumberOfRDSH"           = $MinimumNumberOfRDSH                     # 可选。Default: 1
-     "MaintenanceTagName"            = $MaintenanceTagName                      # 可选。
-     "LimitSecondsToForceLogOffUser" = $LimitSecondsToForceLogOffUser           # 可选。Default: 1
-     "LogOffMessageTitle"            = $LogOffMessageTitle                      # 可选。Default: "Machine is about to shut down."
-     "LogOffMessageBody"             = $LogOffMessageBody                       # 可选。Default: "Your session will be logged off.Please save and close everything."
+     "HostPoolResourceGroupName"     = $WVDHostPool.ResourceGroupName           # Optional. Default: same as ResourceGroupName param value
+     "LogAnalyticsWorkspaceId"       = $LogAnalyticsWorkspaceId                 # Optional. If not specified, script will not log to the Log Analytics
+     "LogAnalyticsPrimaryKey"        = $LogAnalyticsPrimaryKey                  # Optional. If not specified, script will not log to the Log Analytics
+     "ConnectionAssetName"           = $AutoAccountConnection.Name              # Optional. Default: "AzureRunAsConnection"
+     "RecurrenceInterval"            = $RecurrenceInterval                      # Optional. Default: 15
+     "BeginPeakTime"                 = $BeginPeakTime                           # Optional. Default: "09:00"
+     "EndPeakTime"                   = $EndPeakTime                             # Optional. Default: "17:00"
+     "TimeDifference"                = $TimeDifference                          # Optional. Default: "-7:00"
+     "SessionThresholdPerCPU"        = $SessionThresholdPerCPU                  # Optional. Default: 1
+     "MinimumNumberOfRDSH"           = $MinimumNumberOfRDSH                     # Optional. Default: 1
+     "MaintenanceTagName"            = $MaintenanceTagName                      # Optional.
+     "LimitSecondsToForceLogOffUser" = $LimitSecondsToForceLogOffUser           # Optional. Default: 1
+     "LogOffMessageTitle"            = $LogOffMessageTitle                      # Optional. Default: "Machine is about to shut down."
+     "LogOffMessageBody"             = $LogOffMessageBody                       # Optional. Default: "Your session will be logged off. Please save and close everything."
      "WebhookURI"                    = $WebhookURIAutoVar.Value
    }
 

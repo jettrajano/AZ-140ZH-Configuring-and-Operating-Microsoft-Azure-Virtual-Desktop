@@ -259,11 +259,13 @@ lab:
 
 1. 重复上述两个步骤，重置 **wvdaadmin1** 用户帐户的密码。
 
+
 ### 练习 2：配置 Azure AD DS 域环境
   
 本练习的主要任务如下：
 
 1. 使用 Azure 资源管理器快速启动模板部署运行 Windows 10 的 Azure VM
+1. 部署 Azure Bastion
 1. 查看 Azure AD DS 域的默认配置
 1. 创建将同步到 Azure AD DS 的 AD DS 用户和组
 
@@ -298,7 +300,48 @@ lab:
    > **备注**： 部署可能需要大约 10 分钟。等待部署完成后，再继续执行下一个任务。 
 
 
-#### 任务 2：查看 Azure AD DS 域的默认配置
+#### 任务 2：部署 Azure Bastion 
+
+> **备注**：通过 Azure Bastion，可以连接到你在本练习的上一个任务中部署的没有公共终结点的 Azure VM，同时提供针对操作系统级别凭据的暴力攻击防护。
+
+> **备注**：确保你的浏览器启用了弹出功能。
+
+1. 在显示 Azure 门户的浏览器窗口中，打开另一个选项卡，然后在该浏览器选项卡中导航到 Azure 门户。
+1. 在 Azure 门户中，通过选择搜索文本框右侧的“工具栏”图标，打开 **Cloud Shell** 窗格。
+1. 在 Cloud Shell 窗格中的 PowerShell 会话中运行以下命令，将名为 **AzureBastionSubnet** 的子网添加到你在本练习前面部分创建的名为 **az140-adds-vnet11** 的虚拟网络中：
+
+   ```powershell
+   $resourceGroupName = 'az140-11a-RG'
+   $vnet = Get-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Name 'az140-aadds-vnet11a'
+   $subnetConfig = Add-AzVirtualNetworkSubnetConfig `
+     -Name 'AzureBastionSubnet' `
+     -AddressPrefix 10.10.254.0/24 `
+     -VirtualNetwork $vnet
+   $vnet | Set-AzVirtualNetwork
+   ```
+
+1. 关闭 Cloud Shell 窗格。
+1. 在 Azure 门户中搜索并选择“**Bastion**”，然后在“**Bastion**”边栏选项卡中，选择“**+ 创建**”。
+1. 在“**创建 Bastion**”边栏选项卡的“**基本信息**”选项卡中，指定以下设置并选择“**查看 + 创建**”：
+
+   |设置|值|
+   |---|---|
+   |订阅|在本实验室中使用的 Azure 订阅的名称|
+   |资源组|**az140-11a-RG**|
+   |名称|**az140-11a-bastion**|
+   |区域|在本练习的上一个任务中向其中部署了资源的同一 Azure 区域|
+   |层级|**基本**|
+   |虚拟网络|**az140-aadds-vnet11a**|
+   |子网|**AzureBastionSubnet (10.10.254.0/24)**|
+   |公共 IP 地址|**新建**|
+   |公共 IP 名称|**az140-aadds-vnet11a-ip**|
+
+1. 在“**创建 Bastion**”边栏选项卡的“**查看 + 创建**”选项卡中，选择“**创建**”：
+
+   > **备注**：请等待部署完成，再继续执行本练习的下一个任务。该部署可能需要大约 5 分钟。
+
+
+#### 任务 3：查看 Azure AD DS 域的默认配置
 
 > **备注**：在登录到新加入 Azure AD DS 的计算机之前，需要将要登录的用户帐户添加到 **“AAD DC 管理员”** Azure AD 组。此 Azure AD 组是在与预配 Azure AD DS 实例的 Azure 订阅关联的 Azure AD 租户中自动创建的。
 
@@ -315,12 +358,12 @@ lab:
 
 1. 关闭“Cloud Shell”窗格。
 1. 在实验室计算机上，在 Azure 门户中搜索并选择 **“虚拟机”**，然后在 **“虚拟机”** 边栏选项卡中，选择 **“az140-cl-vm11a”** 条目。此时会打开 **“az140-cl-vm11a”** 边栏选项卡。
-1. 在 **“az140-cl-vm11a”** 边栏选项卡中，选择 **“连接”**，在下拉菜单中选择 **“RDP”**，在 **“az140-cl-vm11a \| 连接”** 边栏选项卡上的 **“RDP”** 选项卡的 **“IP 地址”** 下拉列表中，选择 **“公共 IP 地址”** 条目，然后选择 **“下载 RDP 文件”**。
-1. 系统出现提示时，请使用以下凭据登录：
+1. 在“**az140-cl-vm11a**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-cl-vm11a \| 连接**”边栏选项卡的“Bastion”选项卡上，选择“**使用 Bastion**”。
+1. 出现提示时，请提供以下凭据并选择“**连接**”：
 
    |设置|值|
    |---|---|
-   |用户名|**ADATUM\\aadadmin1**|
+   |用户名|**Student@adatum.com**|
    |密码|**Pa55w.rd1234**|
 
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格，运行以下命令来安装 Active Directory 以及与 DNS 相关的远程服务器管理工具：
@@ -342,7 +385,7 @@ lab:
 1. 在 **“Active Directory 用户和计算机”** 控制台的 **“AADDC 用户”** OU 中，选择 **“aadadmin1”** 用户帐户，显示其 **“属性”** 对话框，切换到 **“帐户”** 选项卡，并注意用户主体名称后缀与主 Azure AD DNS 域名匹配且不可修改。 
 1. 在 **“Active Directory 用户和计算机”** 控制台中，查看 **“域控制器”** 组织单位的内容，并注意其中包括两个具有随机生成名称的域控制器的计算机帐户。 
 
-#### 任务 3：创建将同步到 Azure AD DS 的 AD DS 用户和组
+#### 任务 4：创建将同步到 Azure AD DS 的 AD DS 用户和组
 
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，启动 Microsoft Edge，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供 **aadadmin1** 用户帐户的用户主体名称并将 **Pa55w.rd1234** 作为其密码进行登录。
 1. 在 Azure 门户中打开 **Cloud Shell**。

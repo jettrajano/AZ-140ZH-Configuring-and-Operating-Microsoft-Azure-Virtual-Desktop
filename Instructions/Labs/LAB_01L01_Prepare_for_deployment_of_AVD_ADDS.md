@@ -122,11 +122,12 @@ lab:
 
 本练习的主要任务如下：
 
-1. 识别 Azure VM 部署的可用 DNS 名称
+1. 准备 Azure VM 部署
 1. 使用 Azure 资源管理器快速启动模板，部署运行 AD DS 域控制器的 Azure VM
 1. 使用 Azure 资源管理器快速启动模板部署运行 Windows 10 的 Azure VM
+1. 部署 Azure Bastion
 
-#### 任务 1：识别 Azure VM 部署的可用 DNS 名称
+#### 任务 1：准备 Azure VM 部署
 
 1. 在实验室计算机上，启动 Web 浏览器，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
 1. 在显示 Azure 门户的 Web 浏览器中，导航到 Azure AD 租户的“**概述**”边栏选项卡，并在左侧垂直菜单的“**管理**”部分中，单击“**属性**”。
@@ -137,28 +138,19 @@ lab:
 
    >**备注**： 如果这是第一次启动 **Cloud Shell**，并显示消息 **“未装载任何存储”**，请选择你将在本实验室中使用的订阅，然后选择 **“创建存储”**。 
 
-1. 在“Cloud Shell”窗格中，运行以下命令以识别需要在下一个任务中提供的可用 DNS 名称（将 `<custom-name>` 占位符替换为有可能是全局唯一的任何有效 DNS 域名前缀，并将 `<Azure_region>` 占位符替换为要将托管 Active Directory 域控制器的 Azure VM 部署其中的 Azure 区域的名称）：
-
-   ```powershell
-   $location = '<Azure_region>'
-   Test-AzDnsAvailability -Location $location -DomainNameLabel <custom-name>
-   ```
-   > **备注**：要标识可以预配 Azure VM 的 Azure 区域，请参阅 [https://azure.microsoft.com/zh-cn/regions/offers/](https://azure.microsoft.com/zh-cn/regions/offers/)
-
-1. 验证命令是否返回 **“True”**。如果没有，请使用另外的 `<custom-name>` 值重新运行同一命令，直到命令返回为 **True** 为止。
-1. 记录可返回正确结果的 `<custom-name>` 的值。在下一个任务中需要使用它。
 
 #### 任务 2：使用 Azure 资源管理器快速启动模板来部署运行 AD DS 域控制器的 Azure VM
 
-1. 在实验室计算机上，在显示 Azure 门户的 Web 浏览器中，从“Cloud Shell”窗格中的 PowerShell 会话运行以下命令以创建资源组：
+1. 在实验室计算机上显示 Azure 门户的 Web 浏览器中，从 Cloud Shell 窗格中的 PowerShell 会话中运行以下命令，以创建资源组（将 `<Azure_region>` 占位符替换为你打算用于本实验室的 Azure 区域的名称，例如 `eastus`）：
 
    ```powershell
+   $location = '<Azure_region>'
    $resourceGroupName = 'az140-11-RG'
    New-AzResourceGroup -Location $location -Name $resourceGroupName
    ```
 
 1. 在 Azure 门户中，关闭 **“Cloud Shell”** 窗格。
-1. 在实验室计算机的同一 Web 浏览器窗口中，打开另一个 Web 浏览器选项卡并导航到名为[创建新的 Windows VM 并创建新的 AD 林、域和 DC](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/active-directory/active-directory-new-domain) 的快速入门模板。 
+1. 在实验室计算机的同一 Web 浏览器窗口中，打开另一个 Web 浏览器选项卡，并浏览名为[创建新的 Windows VM 并创建新的 AD 林、域和 DC](https://github.com/az140mp/azure-quickstart-templates/tree/master/application-workloads/active-directory/active-directory-new-domain) 的快速启动模板的自定义版本。 
 1. 在 **“创建新的 Windows VM 并创建新的 AD 林、域和 DC”** 页面上，选择 **“部署到 Azure”**。这将自动将浏览器重定向到 Azure 门户中的 **“使用新的 AD 林创建 Azure VM”** 边栏选项卡。
 1. 在 **“使用新的 AD 林创建 Azure VM”** 边栏选项卡中，选择 **“编辑参数”**。
 1. 在 **“编辑参数”** 边栏选项卡中，选择 **“加载文件”**，在 **“打开”** 对话框中，选择 **“\\\\AZ-140\\AllFiles\\Labs\\01\\az140-11_azuredeploydc11.parameters.json”**，然后依次选择 **“打开”** 和 **“保存”**。 
@@ -169,13 +161,10 @@ lab:
    |订阅|在本实验室中使用的 Azure 订阅的名称|
    |资源组|**az140-11-RG**|
    |域名|**adatum.com**|
-   |DNS 前缀|你在上一个任务中标识的 DNS 主机名|
 
 1. 在 **“使用新的 AD 林创建 Azure VM”** 边栏选项卡中，选择 **“查看 + 创建”**，然后单击 **“创建”**。
 
    > **备注**：等待部署完成后，再继续下一个练习。该过程大约需要 15 分钟。 
-
-   > **备注**：部署完成后，导航到 **az140-add -vnet11** 虚拟网络的边栏选项卡，验证其 DNS 自定义配置是否设置为新部署的 Azure VM 的 IP 地址 (10.0.0.4)，如果没有，请手动添加。
 
 #### 任务 3：使用 Azure 资源管理器快速启动模板部署运行 Windows 10 的 Azure VM
 
@@ -204,8 +193,47 @@ lab:
      -TemplateParameterFile $HOME/az140-11_azuredeploycl11.parameters.json
    ```
 
-   > **备注**：不要等待部署完成，而是继续进行下一个练习。该部署可能需要约 10 分钟。
+   > **备注**：请勿等待部署完成，而是继续进行下一项任务。部署可能需要大约 10 分钟。
 
+#### 任务 4：部署 Azure Bastion 
+
+> **备注**：通过 Azure Bastion，可以连接到你在本练习的上一个任务中部署的没有公共终结点的 Azure VM，同时提供针对操作系统级别凭据的暴力攻击防护。
+
+> **备注**：确保你的浏览器启用了弹出功能。
+
+1. 在显示 Azure 门户的浏览器窗口中，打开另一个选项卡，然后在该浏览器选项卡中导航到 Azure 门户。
+1. 在 Azure 门户中，通过选择搜索文本框右侧的“工具栏”图标，打开 **Cloud Shell** 窗格。
+1. 在 Cloud Shell 窗格中的 PowerShell 会话中运行以下命令，将名为 **AzureBastionSubnet** 的子网添加到你在本练习前面部分创建的名为 **az140-adds-vnet11** 的虚拟网络中：
+
+   ```powershell
+   $resourceGroupName = 'az140-11-RG'
+   $vnet = Get-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Name 'az140-adds-vnet11'
+   $subnetConfig = Add-AzVirtualNetworkSubnetConfig `
+     -Name 'AzureBastionSubnet' `
+     -AddressPrefix 10.0.254.0/24 `
+     -VirtualNetwork $vnet
+   $vnet | Set-AzVirtualNetwork
+   ```
+
+1. 关闭 Cloud Shell 窗格。
+1. 在 Azure 门户中搜索并选择“**Bastion**”，然后在“**Bastion**”边栏选项卡中，选择“**+ 创建**”。
+1. 在“**创建 Bastion**”边栏选项卡的“**基本信息**”选项卡中，指定以下设置并选择“**查看 + 创建**”：
+
+   |设置|值|
+   |---|---|
+   |订阅|在本实验室中使用的 Azure 订阅的名称|
+   |资源组|**az140-11-RG**|
+   |名称|**az140-11-bastion**|
+   |区域|在本练习前面的任务中向其中部署了资源的同一 Azure 区域|
+   |层级|**基本**|
+   |虚拟网络|**az140-adds-vnet11**|
+   |子网|**AzureBastionSubnet (10.0.254.0/24)**|
+   |公共 IP 地址|**新建**|
+   |公共 IP 名称|**az140-adds-vnet11-ip**|
+
+1. 在“**创建 Bastion**”边栏选项卡的“**查看 + 创建**”选项卡中，选择“**创建**”：
+
+   > **备注**：等待部署完成后，再继续下一个练习。部署可能需要大约 5 分钟。
 
 ### 练习 2：将 AD DS 林与 Azure AD 租户集成
   
@@ -220,12 +248,12 @@ lab:
 #### 任务 1：创建将同步到 Azure AD 的 AD DS 用户和组
 
 1. 切换到实验室计算机，在显示 Azure 门户的 Web 浏览器中，搜索并选择 **“虚拟机”**，然后在 **“虚拟机”** 边栏选项卡中选择 **“az140-dc-vm11”**。
-1. 在 **“az140-dc-vm11”** 边栏选项卡中，选择 **“连接”**，在下拉菜单中选择 **“RDP”**，在 **“RDP”** 选项卡上，其位于 **“az140-dc-vm11 \| 连接”** 边栏选项卡中，在 **“IP 地址”** 下拉列表中选择 **“负载均衡器 DNS 名称”** 条目，然后选择 **“下载 RDP 文件”**。
-1. 系统出现提示时，请使用以下凭据登录：
+1. 在“**az140-dc-vm11**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-dc-vm11 \| 连接**”边栏选项卡的“**Bastion**”选项卡上，选择“**使用 Bastion**”。
+1. 出现提示时，请提供以下凭据并选择“**连接**”：
 
    |设置|值|
    |---|---|
-   |用户名|**ADATUM\\Student**|
+   |用户名|**Student**|
    |密码|**Pa55w.rd1234**|
 
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**。

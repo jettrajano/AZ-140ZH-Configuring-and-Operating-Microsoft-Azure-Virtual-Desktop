@@ -63,7 +63,7 @@
       "value": "MicrosoftWindowsDesktop"
     },
     "vmGalleryImageSKU": {
-      "value": "20h2-evd-o365pp-g2"
+      "value": "20h1-evd-o365pp"
     },
     "vmImageVhdUri": {
       "value": null
@@ -79,6 +79,9 @@
     },
     "storageAccountResourceGroupName": {
       "value": null
+    },
+    "bootDiagnostics": {
+      "value": {}
     },
     "existingVnetName": {
       "value": "az140-adds-vnet11"
@@ -136,6 +139,9 @@
     },
     "domain": {
       "value": "adatum.com"
-    }
+    },
+    "systemData": {
+      "value": {}
+    }    
   }
 }

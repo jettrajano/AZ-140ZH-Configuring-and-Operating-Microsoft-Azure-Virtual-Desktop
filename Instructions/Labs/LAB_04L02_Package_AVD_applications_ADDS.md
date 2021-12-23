@@ -257,7 +257,7 @@ lab:
 
 #### 任务 2：创建 MSIX 应用附加映像
 
-1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，并浏览到 **https://aka.ms/msixmgr**。 这会将 **msixmgr.zip** 文件（MSIX mgr 工具存档）自动下载到“**下载**”文件夹。
+1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 **Microsoft Edge**，并浏览到 **https://aka.ms/msixmgr** 。 这会将 **msixmgr.zip** 文件（MSIX mgr 工具存档）自动下载到“**下载**”文件夹。
 1. 在文件资源管理器中，导航到 **“下载”** 文件，打开压缩文件，并将 **x64** 文件夹的内容复制到 **C:\\AllFiles\\Labs\\04** 文件夹。 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以创建将用作 MSIX 应用附加映像的 VHD 文件：
 

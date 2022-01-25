@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：打包 Azure 虚拟桌面应用程序 (AD DS)'
     module: '模块 4：管理用户环境和应用'
@@ -13,6 +13,7 @@ lab:
 - 一个 Microsoft 帐户或 Azure AD 帐户，该帐户具有与 Azure 订阅关联的 Azure AD 租户的全局管理员角色，以及 Azure 订阅的所有者角色或参与者角色
 - 已完成实验室 **“准备部署 Azure 虚拟桌面 (AD DS)”**
 - 已完成实验室 **“Azure 虚拟桌面配置文件管理 (AD DS)”**
+- 已完成实验室“**为 WVD (AD DS) 配置条件访问策略**”
 
 ## 预计用时
 
@@ -59,7 +60,7 @@ lab:
    Get-AzVM -ResourceGroup 'az140-21-RG' | Start-AzVM -NoWait
    ```
 
-   >**备注**： 该命令异步执行（由 -NoWait 参数确定），因此尽管此后可以立即在同一 PowerShell 会话中运行另一个 PowerShell 命令，但实际上也要花几分钟才能启动 Azure VM。 
+   >**备注**： 该命令异步执行（由 -NoWait 参数确定），因此尽管可立即在同一 PowerShell 会话中运行另一个 PowerShell 命令，但实际上要花几分钟才能启动 Azure VM。 
 
    >**备注**： 无需等待 Azure VM 启动，直接继续执行下一个任务。
 
@@ -87,13 +88,7 @@ lab:
 
 1. 在实验室计算机上，在 Azure 门户中搜索并选择 **“虚拟机”**，然后从 **“虚拟机”** 边栏选项卡的虚拟机列表中选择 **“az140-cl-vm42”** 条目。 **“az140-cl-vm42”** 边栏选项卡随即打开。
 1. 在“**az140-cl-vm42**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-cl-vm11 \| 连接**”边栏选项卡的“**Bastion**”选项卡上，选择“**使用 Bastion**”。
-1. 系统出现提示时，请使用以下凭据登录：
-
-   |设置|值|
-   |---|---|
-   |用户名|**ADATUM\\wvdadmin1**|
-   |密码|**Pa55w.rd1234**|
-
+1. 出现提示时，使用 **ADATUM\wvdadmin1** 用户名并使用创建此用户帐户时设置的密码登录。 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 控制台中运行以下命令，为 MSIX 打包准备操作系统：
 
    ```powershell
@@ -253,7 +248,7 @@ lab:
    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
    ```
 
-1. Hyper-V 组件安装完成后，键入 **Y** 并按 **Enter** 键，以重启操作系统。重启后，使用帐户 **ADATUM\wvdadmin1** 和密码 **Pa55w.rd1234** 重新登录。
+1. Hyper-V 组件安装完成后，键入 **Y** 并按 **Enter** 键，以重启操作系统。重启后，使用 **ADATUM\wvdadmin1** 帐户以及创建此用户帐户时设置的密码登录。
 
 #### 任务 2：创建 MSIX 应用附加映像
 
@@ -266,13 +261,13 @@ lab:
    New-VHD -SizeBytes 128MB -Path 'C:\Allfiles\Labs\04\MSIXVhds\XmlNotepad.vhd' -Dynamic -Confirm:$false
    ```
 
-1. 从 **“管理员: indows PowerShell ISE”** 脚本窗格中运行以下命令，以安装新创建的 VHD 文件：
+1. 从“**管理员: Windows PowerShell ISE**”脚本窗格中运行以下命令，以安装新创建的 VHD 文件：
 
    ```powershell
    $vhdObject = Mount-VHD -Path 'C:\Allfiles\Labs\04\MSIXVhds\XmlNotepad.vhd' -Passthru
    ```
 
-1. 从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以初始化磁盘、创建新分区、格式化磁盘，并将磁盘分配到第一个可用的驱动器号：
+1. 从“**管理员: Windows PowerShell ISE**”脚本窗格中运行以下命令，以初始化磁盘、创建新分区、格式化该分区，并为该分区分配第一个可用的驱动器号：
 
    ```powershell
    $disk = Initialize-Disk -Passthru -Number $vhdObject.Number
@@ -347,7 +342,7 @@ lab:
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，在 **“开始”** 菜单中展开 **Azure AD Connect** 文件夹，并选择 **“Azure AD Connect”**。
 1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“欢迎使用 Azure AD Connect”** 页上，选择 **“配置”**。
 1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“附加任务”** 页上，依次选择 **“自定义同步选项”** 和 **“下一步”**。
-1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“连接到 Azure AD”** 页上，使用在本任务稍早部分标识的用户帐户 **“aadsyncuser”** 的用户主体名称和密码 **“Pa55w.rd1234”** 进行身份验证。
+1. 在“**Microsoft Azure Active Directory Connect**”窗口的“**连接到 Azure AD**”页上，使用在本任务稍早部分指定的用户帐户“**aadsyncuser**”的用户主体名称和创建该用户帐户时设置的密码进行身份验证。
 1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“连接到目录”** 页上，选择 **“下一步”**。
 1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“域和 OU 筛选”** 页上，确保已选中 **“同步所选域和 OU”** 选项，展开 **“adatum.com”** 节点，选中 **“WVDInfra”** OU 旁边的复选框（任何其他已选中的复选框保持不变），然后选择 **“下一步”**。
 1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“可选功能”** 页上，接受默认设置，然后选择 **“下一步”**。
@@ -382,7 +377,7 @@ lab:
 
    |设置|值|
    |---|---|
-   |角色|**存储文件数据 SMB 共享提升参与者**|
+   |角色|**存储文件数据 SMB 共享提升的参与者**|
    |将访问权限分配到|**用户、组或服务主体**|
    |选择|**az140-wvd-admins**|
 
@@ -392,7 +387,7 @@ lab:
 
    |设置|值|
    |---|---|
-   |角色|**存储文件数据 SMB 共享提升参与者**|
+   |角色|**存储文件数据 SMB 共享提升的参与者**|
    |将访问权限分配到|**用户、组或服务主体**|
    |选择|**az140-hosts-42-p1**|
 
@@ -472,7 +467,7 @@ lab:
    |MSIX 应用程序|**XMLNOTEPAD**|
    |应用程序名称|**XML Notepad**|
    |显示名称|**XML Notepad**|
-   |描述|**XML Notepad**|
+   |说明|**XML Notepad**|
    |图标路径|**C:\Program Files\WindowsApps\XmlNotepad_2.8.0.0_x64__4vm7ty4fw38e8\VFS\ProgramFilesX86\LovettSoftware\XmlNotepad\XmlNotepad.exe**|
    |图标索引|**0**|
 
@@ -487,13 +482,13 @@ lab:
    |MSIX 包|代表映像中包含的包的名称|
    |应用程序名称|**XML Notepad**|
    |显示名称|**XML Notepad**|
-   |描述|**XML Notepad**|
+   |说明|**XML Notepad**|
 
 #### 任务 5：验证 MSIX 应用附加的功能
 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，启动 Microsoft Edge 并导航到 [Windows 桌面客户端下载页面](https://go.microsoft.com/fwlink/?linkid=2068602)，下载完成后，选择 **“打开文件”** 开始安装。在 **“远程桌面安装”** 向导的 **“安装范围”** 页上，选择 **“为此计算机的所有用户安装”** 选项，然后单击 **“安装”**。 
 1. 安装完成后，请确保 **“安装完成时启动远程桌面”** 复选框处于选中状态，然后单击 **“完成”** 以启动“远程桌面客户端”。
-1. 在 **“远程桌面”** 客户端窗口中，选择 **“订阅”**，并在出现提示时使用用户主体名称 **“aduser1”** 和密码 **“Pa55w.rd1234”** 进行登录。
+1. 在“**远程桌面**”客户端窗口中，选择“**订阅**”，并在出现提示时使用 **aduser1** 用户主体名称和创建该用户帐户时设置的密码登录。 
 1. 出现提示时，在 **“保持登录到所有应用”** 窗口中清除复选框 **“允许组织管理我的设备”**，然后单击 **“否，仅登录到此应用”**。
 1. 在 **“远程桌面”** 客户端窗口的 **“az140-21-ws1”** 部分中，双击 **“XML Notepad”** 图标，在出现提示时提供密码，然后验证 XML Notepad 是否成功启动。
 
@@ -523,4 +518,4 @@ lab:
    Get-AzVM -ResourceGroup 'az140-42-RG' | Stop-AzVM -NoWait -Force
    ```
 
-   >**备注**：该命令异步执行（由 -NoWait 参数确定），因此尽管此后可以立即在同一 PowerShell 会话中运行另一个 PowerShell 命令，但实际上也要花几分钟才能停止和解除分配 Azure VM。
+   >**备注**：该命令异步执行（由 -NoWait 参数确定），因此，尽管可立即在同一 PowerShell 会话中运行另一个 PowerShell 命令，但实际上要花几分钟才能停止和解除分配 Azure VM。

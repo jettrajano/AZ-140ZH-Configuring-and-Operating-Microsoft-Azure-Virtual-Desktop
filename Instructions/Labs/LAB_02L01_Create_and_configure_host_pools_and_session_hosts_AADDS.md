@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：创建和配置主机池和会话主机 (Azure AD DS)'
     module: '模块 2：实现 AVD 基础结构'

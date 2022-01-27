@@ -45,7 +45,7 @@ lab:
 
 #### 任务 1：确定当前的 vCPU 使用情况
 
-1. 在实验室计算机上，启动 Web 浏览器，导航至 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
+1. 在实验室计算机上，启动 Web 浏览器，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
 1. 在 Azure 门户中，通过选择搜索文本框右侧的“工具栏”图标，打开 **“Cloud Shell”** 窗格。
 1. 提示选择 **“Bash”** 或 **“PowerShell”** 时，选择 **“PowerShell”**。 
 
@@ -86,9 +86,9 @@ lab:
 
    |设置|值|
    |---|---|
-   |问题类型|服务和订阅限制（配额）|
-   |订阅|本实验室将使用的 Azure 订阅的名称|
-   |配额类型|计算 VM（核心数-vCPU 数）订阅限制提高|
+   |问题类型|**服务和订阅限制（配额）**|
+   |订阅|将在本实验室中使用的 Azure 订阅的名称|
+   |配额类型|**计算 VM（核心数-vCPU 数）订阅限制提高**|
    |支持计划|与目标订阅关联的支持计划的名称|
 
 1. 在 **“新建支持请求”** 边栏选项卡的 **“详细信息”** 选项卡上，选择 **“提供详细信息”** 链接。
@@ -149,14 +149,15 @@ lab:
    $aadDomainName = ((Get-AzureAdTenantDetail).VerifiedDomains)[0].Name
    ```
 
-1. 在“Cloud Shell”窗格中，运行以下命令以创建将获得提升权限的 Azure AD 用户：
+1. 在“Cloud Shell”窗格中，运行以下命令以创建将获得提升权限的 Azure AD 用户（将 `<password>` 占位符替换为随机的复杂密码）：
+
+   > **备注**：确保你记住了所用的密码。稍后你将在本实验室或后续实验室中用到它。
 
    ```powershell
    $passwordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-   $passwordProfile.Password = 'Pa55w.rd1234'
+   $passwordProfile.Password = '<password>'
    $passwordProfile.ForceChangePasswordNextLogin = $false
    New-AzureADUser -AccountEnabled $true -DisplayName 'aadadmin1' -PasswordProfile $passwordProfile -MailNickName 'aadadmin1' -UserPrincipalName "aadadmin1@$aadDomainName"
-
    New-AzureADUser -AccountEnabled $true -DisplayName 'wvdaadmin1' -PasswordProfile $passwordProfile -MailNickName 'wvdaadmin1' -UserPrincipalName "wvdaadmin1@$aadDomainName"
    ```
 
@@ -209,7 +210,7 @@ lab:
    > **备注**： 虽然这在技术上不是必需的，但通常应分配一个不同于任何现有 Azure 或本地 DNS 名称空间的 Azure AD DS 域名。
 
 1. 在 **“创建 Azure AD 域服务”** 边栏选项卡的 **“网络”** 选项卡上，选择 **“虚拟网络”** 下拉列表旁边的 **“新建”**。
-1. 在“**创建虚拟网络**”边栏选项卡上，分配以下设置然后选择“**确定**”：
+1. 在“**创建虚拟网络**”边栏选项卡上，指定以下设置并选择“**确定**”：
 
    |设置|值|
    |---|---|
@@ -248,10 +249,12 @@ lab:
    $objectId = (Get-AzureADUser -Filter "MailNickName eq 'aadadmin1'").ObjectId
    ```
 
-1. 从“Cloud Shell”窗格中的 PowerShell 会话，运行以下命令以重置你在上一步中标识的 objectId 的 **aadadmin1** 用户帐户的密码：
+1. 从“Cloud Shell”窗格中的 PowerShell 会话，运行以下命令以重置你在上一步中标识的 objectId 的 **aadadmin1** 用户帐户的密码（将 `<password>` 占位符替换为随机的复杂密码）：
+
+   > **备注**：确保你记住了所用的密码。稍后你将在本实验室或后续实验室中用到它。
 
    ```powershell
-   $password = ConvertTo-SecureString 'Pa55w.rd1234' -AsPlainText -Force
+   $password = ConvertTo-SecureString '<password>' -AsPlainText -Force
    Set-AzureADUserPassword -ObjectId $objectId -Password $password -ForceChangePasswordNextLogin $false
    ```
 
@@ -359,13 +362,7 @@ lab:
 1. 关闭“Cloud Shell”窗格。
 1. 在实验室计算机上，在 Azure 门户中搜索并选择 **“虚拟机”**，然后在 **“虚拟机”** 边栏选项卡中，选择 **“az140-cl-vm11a”** 条目。此时会打开 **“az140-cl-vm11a”** 边栏选项卡。
 1. 在“**az140-cl-vm11a**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-cl-vm11a \| 连接**”边栏选项卡的“Bastion”选项卡上，选择“**使用 Bastion**”。
-1. 出现提示时，请提供以下凭据并选择“**连接**”：
-
-   |设置|值|
-   |---|---|
-   |用户名|**Student@adatum.com**|
-   |密码|**Pa55w.rd1234**|
-
+1. 系统出现提示时，使用你之前在本实验室中指定的主体名称和之前在本实验室中创建该用户帐户时为其设置的密码，以 **aadadmin1** 用户的身份登录。
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格，运行以下命令来安装 Active Directory 以及与 DNS 相关的远程服务器管理工具：
 
    ```powershell
@@ -375,7 +372,7 @@ lab:
    Add-WindowsCapability -Name Rsat.ServerManager.Tools~~~~0.0.1.0 -Online
    ```
 
-   > **备注**： 等待安装完成后，再继续下一步。该过程大约需要 2 分钟。
+   > **备注**：请等待安装完成，再继续下一步。该过程大约需要 2 分钟。
 
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中的 **“开始”** 菜单中，导航到 **“Windows 管理工具”** 文件夹，将其展开，然后从工具列表中启动 **“Active Directory 用户和计算机”**。 
 1. 在 **“Active Directory 用户和计算机”** 控制台中，查看默认层次结构，包括 **“AADDC 计算机”** 和 **“AADDC 用户”** 组织单位。请注意，前者包括 **az140-cl-vm11a** 计算机帐户，后者包括从与托管 Azure AD DS 实例部署的 Azure 订阅关联的 Azure AD 租户同步的用户帐户。 **AADDC 用户**组织单位还包括从同一 Azure AD 租户同步的 **AAD DC 管理员**组及其组成员身份。不能直接在 Azure AD DS 域中修改此成员身份，而必须在 Azure AD DS 租户中对其进行管理。任何更改都会自动与 Azure AD DS 域中托管的组的副本同步。 
@@ -387,7 +384,7 @@ lab:
 
 #### 任务 4：创建将同步到 Azure AD DS 的 AD DS 用户和组
 
-1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，启动 Microsoft Edge，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供 **aadadmin1** 用户帐户的用户主体名称并将 **Pa55w.rd1234** 作为其密码进行登录。
+1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，启动 Microsoft Edge，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供 **aadadmin1** 用户帐户的用户主体名称并将你之前在本实验中设置的密码作为其密码进行登录。
 1. 在 Azure 门户中打开 **Cloud Shell**。
 1. 当提示你选择 **“Bash”** 或 **“PowerShell”** 时，选择 **“PowerShell”**。 
 
@@ -405,11 +402,13 @@ lab:
    $aadDomainName = ((Get-AzureAdTenantDetail).VerifiedDomains)[0].Name
    ```
 
-1. 从“Cloud Shell”窗格中的 PowerShell 会话，运行以下命令以创建你将在后续实验室中使用的 Azure AD 用户帐户：
+1. 从“Cloud Shell”窗格中的 PowerShell 会话，运行以下命令以创建你将在后续实验室中使用的 Azure AD 用户帐户（将 `<password>` 占位符替换为随机的复杂密码）：
+
+   > **备注**：确保你记住了所用的密码。稍后你将在本实验室或后续实验室中用到它。
 
    ```powershell
    $passwordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-   $passwordProfile.Password = 'Pa55w.rd1234'
+   $passwordProfile.Password = '<password>'
    $passwordProfile.ForceChangePasswordNextLogin = $false
    $aadUserNamePrefix = 'aaduser'
    $userCount = 1..9
@@ -480,7 +479,7 @@ lab:
 
 1. 关闭 Cloud Shell 窗格。
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，在显示 Azure 门户的 Microsoft Edge 窗口中，搜索并选择 **“Azure Active Directory”** 边栏选项卡，在 Azure AD 租户边栏选项卡左侧垂直菜单栏的 **“管理”** 部分中，选择 **“用户”**，然后在 **“用户 \| 所有用户”** 边栏选项卡上，验证是否已创建新用户帐户。
-1. 导航回 **“Azure AD 租户”** 边栏选项卡，在左侧垂直菜单栏上的 **“管理”** 部分中，选择 **“组”**，然后在 **“组 \| 所有组”** 边栏选项卡上，验证是否已创建新的组帐户。
+1. 导航回“Azure AD 租户”边栏选项卡，在左侧垂直菜单栏上的 **“管理”** 部分中，选择 **“组”**，然后在 **“组 \| 所有组”** 边栏选项卡上，验证是否已创建新的组帐户。
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，切换到 **“Active Directory 用户和计算机”** 控制台，在 **“Active Directory 用户和计算机”** 控制台中，导航到 **“AADDC 用户”** OU，并验证它是否包含相同的用户和组帐户。
 
    >**备注**： 你可能需要刷新控制台的视图。

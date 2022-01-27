@@ -46,7 +46,7 @@ lab:
 
 #### 任务 1：确定当前的 vCPU 使用情况
 
-1. 在实验室计算机上，启动 Web 浏览器，导航至 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
+1. 在实验室计算机上，启动 Web 浏览器，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供你将在本实验室使用的订阅中具有所有者角色的用户帐户凭据进行登录。
 1. 在 Azure 门户中，通过选择搜索文本框右侧的“工具栏”图标，打开 **“Cloud Shell”** 窗格。
 1. 提示选择 **“Bash”** 或 **“PowerShell”** 时，选择 **“PowerShell”**。 
 
@@ -64,7 +64,7 @@ lab:
    Get-AzResourceProvider -ListAvailable | Where-Object {$_.ProviderNamespace -eq 'Microsoft.Compute'}
    ```
 
-   >**备注**验证状态是否显示为 **“已注册”**。如果未显示，请等待几分钟并重复此步骤。
+   >**备注**: 验证状态是否显示为 **“已注册”**。如果未显示，请等待几分钟并重复此步骤。
 
 1. 在 Azure 门户中，在 **Cloud Shell** 的 PowerShell 会话中，运行以下命令以确定 vCPU 的当前使用情况以及 **StandardDSv3Family** 和 **StandardBSFamily** Azure VM 的相应限制（将 `<Azure_region>` 占位符替换为你打算用于本实验室的 Azure 区域的名称，例如 `eastus`）：
 
@@ -88,7 +88,7 @@ lab:
    |设置|值|
    |---|---|
    |问题类型|**服务和订阅限制（配额）**|
-   |订阅|本实验室将使用的 Azure 订阅的名称|
+   |订阅|将在本实验室中使用的 Azure 订阅的名称|
    |配额类型|**计算 VM（核心数-vCPU 数）订阅限制提高**|
    |支持计划|与目标订阅关联的支持计划的名称|
 
@@ -123,7 +123,7 @@ lab:
 本练习的主要任务如下：
 
 1. 准备 Azure VM 部署
-1. 使用 Azure 资源管理器快速启动模板，部署运行 AD DS 域控制器的 Azure VM
+1. 使用 Azure 资源管理器快速启动模板来部署运行 AD DS 域控制器的 Azure VM
 1. 使用 Azure 资源管理器快速启动模板部署运行 Windows 10 的 Azure VM
 1. 部署 Azure Bastion
 
@@ -162,7 +162,7 @@ lab:
    |资源组|**az140-11-RG**|
    |域名|**adatum.com**|
 
-1. 在 **“使用新的 AD 林创建 Azure VM”** 边栏选项卡中，选择 **“查看 + 创建”**，然后单击 **“创建”**。
+1. 在“**使用新的 AD 林创建 Azure VM**”边栏选项卡中，选择“**查看 + 创建**”，然后选择“**创建**”。
 
    > **备注**：等待部署完成后，再继续下一个练习。该过程大约需要 15 分钟。 
 
@@ -249,7 +249,7 @@ lab:
 
 1. 切换到实验室计算机，在显示 Azure 门户的 Web 浏览器中，搜索并选择 **“虚拟机”**，然后在 **“虚拟机”** 边栏选项卡中选择 **“az140-dc-vm11”**。
 1. 在“**az140-dc-vm11**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-dc-vm11 \| 连接**”边栏选项卡的“**Bastion**”选项卡上，选择“**使用 Bastion**”。
-1. 出现提示时，请提供以下凭据并选择“**连接**”：
+1. 系统出现提示时，请提供以下凭据并选择“**连接**”：
 
    |设置|值|
    |---|---|
@@ -277,7 +277,9 @@ lab:
    New-ADOrganizationalUnit 'WVDClients' -path 'DC=adatum,DC=com' -ProtectedFromAccidentalDeletion $false
    ```
 
-1. 从 **“管理员: Windows PowerShell ISE”** 脚本窗格中，运行以下命令创建 AD DS 用户帐户，这些帐户将同步到本实验室中使用的 Azure AD 租户：
+1. 从 **“管理员: Windows PowerShell ISE”** 脚本窗格中，运行以下命令创建 AD DS 用户帐户，这些帐户将同步到本实验室中使用的 Azure AD 租户（将 `<password>` 占位符替换为随机的复杂密码）：
+
+   > **备注**：确保你记住了所用的密码。稍后你将在本实验室或后续实验室中用到它。
 
    ```powershell
    $ouName = 'ToSync'
@@ -288,14 +290,14 @@ lab:
    foreach ($counter in $userCount) {
      New-AdUser -Name $adUserNamePrefix$counter -Path $ouPath -Enabled $True `
        -ChangePasswordAtLogon $false -userPrincipalName $adUserNamePrefix$counter@$adUPNSuffix `
-       -AccountPassword (ConvertTo-SecureString 'Pa55w.rd1234' -AsPlainText -Force) -passThru
+       -AccountPassword (ConvertTo-SecureString <password> -AsPlainText -Force) -passThru
    } 
 
    $adUserNamePrefix = 'wvdadmin1'
    $adUPNSuffix = 'adatum.com'
    New-AdUser -Name $adUserNamePrefix -Path $ouPath -Enabled $True `
        -ChangePasswordAtLogon $false -userPrincipalName $adUserNamePrefix@$adUPNSuffix `
-       -AccountPassword (ConvertTo-SecureString 'Pa55w.rd1234' -AsPlainText -Force) -passThru
+       -AccountPassword (ConvertTo-SecureString <password> -AsPlainText -Force) -passThru
 
    Get-ADGroup -Identity 'Domain Admins' | Add-AdGroupMember -Members 'wvdadmin1'
    ```
@@ -391,12 +393,14 @@ lab:
 
 #### 任务 3：创建将用于配置目录同步的 Azure AD 用户
 
-1. 在与 **az140-dc-vm11** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以创建新的 Azure AD 用户：
+1. 在与 **az140-dc-vm11** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格中运行以下命令，以创建新的 Azure AD 用户（将 `<password>` 占位符替换为随机的复杂密码）：
+
+   > **备注**：确保你记住了所用的密码。稍后你将在本实验室或后续实验室中用到它。
 
    ```powershell
    $userName = 'aadsyncuser'
    $passwordProfile = New-Object -TypeName Microsoft.Open.AzureAD.Model.PasswordProfile
-   $passwordProfile.Password = 'Pa55w.rd1234'
+   $passwordProfile.Password = '<password>'
    $passwordProfile.ForceChangePasswordNextLogin = $false
    New-AzureADUser -AccountEnabled $true -DisplayName $userName -PasswordProfile $passwordProfile -MailNickName $userName -UserPrincipalName "$userName@$aadDomainName"
    ```
@@ -453,7 +457,7 @@ lab:
 1. 在 **“用户登录”** 页面中，确保仅启用 **“密码哈希同步”**，然后选择 **“下一步”**。
 1. 在 **“连接到 Azure AD”** 页面中，使用你在上一个练习中创建的 **“aadsyncuser”** 用户帐户凭据进行身份验证，然后选择 **“下一步”**。 
 
-   > **备注**：提供在本练习前面记录的 **aadsyncuser** 帐户的 userPrincipalName 属性，并指定 **Pa55w.rd1234** 作为其密码。
+   > **备注**：提供在本练习前面记录的 **aadsyncuser** 帐户的 userPrincipalName 属性，并指定你之前在本实验室中设置的密码作为其密码。
 
 1. 在 **“连接目录”** 页面上，选择 **“adatum.com”** 林条目右边的 **“添加目录”** 按钮。
 1. 在 **“AD 林帐户”** 窗口中，确保选择 **“新建 AD 帐户”** 选项，指定以下凭据，然后选择 **“确定”**：

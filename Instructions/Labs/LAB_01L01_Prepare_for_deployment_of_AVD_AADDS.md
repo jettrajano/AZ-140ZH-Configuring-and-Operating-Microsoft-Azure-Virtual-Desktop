@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: '实验室：准备部署 Azure 虚拟桌面 (Azure AD DS)'
     module: '模块 1：规划 AVD 体系结构'

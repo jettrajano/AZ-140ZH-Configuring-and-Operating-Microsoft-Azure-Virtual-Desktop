@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：实现和管理 Azure 虚拟桌面配置文件 (Azure AD DS)'
     module: '模块 4：管理用户环境和应用'
@@ -52,7 +52,7 @@ lab:
 
    |设置|值|
    |---|---|
-   |用户名|**Student@adatum.com**|
+   |用户名|**aadadmin1@adatum.com**|
    |密码|**Pa55w.rd1234**|
 
 1. 在与 **az140-cl-vm11a** 的远程桌面会话的“开始”菜单中，导航到 **“Windows 管理工具”** 文件夹，将其展开，并选择 **“Active Directory 用户和计算机”**。
@@ -135,7 +135,8 @@ lab:
    New-ItemProperty -Path $profilesParentKey\$profilesChildKey -Name 'Enabled' -PropertyType DWord -Value 1
    New-ItemProperty -Path $profilesParentKey\$profilesChildKey -Name 'VHDLocations' -PropertyType MultiString -Value "\\$storageAccountName.file.core.windows.net\$fileShareName"
    ```
-
+   >**备注** 如果该命令生成错误，请继续执行下一步。
+   
 1. 在与 **az140-21-p1-0** 的远程桌面会话中，右键单击 **“开始”**，在右键单击菜单中，选择 **“运行”**，在 **“运行”** 对话框的 **“打开”** 文本框中，键入以下命令并选择 **“确定”**，以启动 **“本地用户和组”** 窗口：
 
    ```cmd
@@ -168,6 +169,7 @@ lab:
    ```
 
 1. 在与 **az140-21-p1-0** 的远程桌面会话中，启动 **Windows PowerShell ISE** 作为管理员，并从 **“管理员: Windows PowerShell ISE”** 脚本窗格运行以下脚本，以在 **“az140-21-p1-1”** 会话主机上配置配置文件注册表设置：
+>**备注**：将 <storageAccountName> 替换为存储帐户的实际名称。
 
    ```powershell
    $profilesParentKey = 'HKLM:\SOFTWARE\FSLogix'
@@ -176,7 +178,7 @@ lab:
    Invoke-Command -ComputerName $server -ScriptBlock {
       New-Item -Path $using:profilesParentKey -Name $using:profilesChildKey –Force
       New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'Enabled' -PropertyType DWord -Value 1
-      New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'VHDLocations' -PropertyType MultiString -Value "\\$using:storageAccountName.file.core.windows.net\$using:fileShareName"
+      New-ItemProperty -Path $using:profilesParentKey\$using:profilesChildKey -Name 'VHDLocations' -PropertyType MultiString -Value "\\<storageAccountName>.file.core.windows.net\$using:fileShareName"
    }
    ```
 

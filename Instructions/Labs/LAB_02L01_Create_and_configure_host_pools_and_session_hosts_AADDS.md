@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: '实验室：创建和配置主机池和会话主机 (Azure AD DS)'
     module: '模块 2：实现 AVD 基础结构'
@@ -52,7 +52,7 @@ lab:
 
    |设置|值|
    |---|---|
-   |用户名|**Student@adatum.com**|
+   |用户名|**aadadmin1@adatum.com**|
    |密码|**Pa55w.rd1234**|
 
 1. 在与 **az140-cl-vm11a** Azure VM 的远程桌面中，启动 Microsoft Edge，导航到 [Azure 门户](https://portal.azure.com)，然后通过提供 **aadadmin1** 用户帐户的用户主体名称并将创建帐户时设置的密码作为其密码进行登录。
@@ -92,23 +92,24 @@ lab:
    |---|---|
    |添加虚拟机|**是**|
    |资源组|**默认与主机池相同**|
+   |名称前缀|**az140-21-p1**|
    |虚拟机位置|在本实验室的第一个练习中，将资源部署到其中的 Azure 区域的名称|
    |可用性选项|**不需要基础结构冗余**|
    |映像类型|**库**|
    |映像|**Windows 10 企业版多会话版本 2004 + Microsoft 365 应用**|
    |虚拟机大小|**标准 D2s v3**|
    |VM 数|**2**|
-   |名称前缀|**az140-21-p1**|
    |OS 磁盘类型|**标准 SSD**|
    |虚拟网络|**az140-aadds-vnet11a**|
    |子网|**hp1-Subnet (10.10.1.0/24)**|
    |网络安全组|**基本**|
    |公共入站端口|**否**|
+   |选择要加入的目录|**Active Directory**|
+   |AD 域加入 UPN|**aadadmin1@***<Azure_AD_domain_name>*|
+   |密码|使用 aadadmin1 的密码|
    |指定域或单元|**是**|
    |要加入的域|**adatum.com**|
    |组织单位路径|**OU=AADDC Computers,DC=adatum,DC=com**|
-   |AD 域加入 UPN|**aadadmin1@***<Azure_AD_domain_name>*|
-   |密码|`<password>`|
    |虚拟机管理员帐户用户名|**student**|
    |虚拟机管理员帐户密码|**Pa55w.rd1234**|
 

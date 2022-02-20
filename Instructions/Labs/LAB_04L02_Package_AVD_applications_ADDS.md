@@ -87,8 +87,8 @@ lab:
 #### 任务 3：为 MSIX 打包准备运行 Windows 10 的 Azure VM
 
 1. 在实验室计算机上，在 Azure 门户中搜索并选择 **“虚拟机”**，然后从 **“虚拟机”** 边栏选项卡的虚拟机列表中选择 **“az140-cl-vm42”** 条目。 **“az140-cl-vm42”** 边栏选项卡随即打开。
-1. 在“**az140-cl-vm42**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-cl-vm11 \| 连接**”边栏选项卡的“**Bastion**”选项卡上，选择“**使用 Bastion**”。
-1. 出现提示时，使用 **ADATUM\wvdadmin1** 用户名并使用创建此用户帐户时设置的密码登录。 
+1. 在“**az140-cl-vm42**”边栏选项卡上，选择“**连接**”，在下拉菜单中选择“**Bastion**”，在“**az140-cl-vm42 \| 连接**”边栏选项卡的“**Bastion**”选项卡上，选择“**使用 Bastion**”。
+1. 出现提示时，使用 **wvdadmin1** 用户名和创建此用户帐户时设置的密码进行登录。 
 1. 在与 **az140-cl-vm42** 的远程桌面会话中，以管理员身份启动 **Windows PowerShell ISE**，并从 **“管理员: Windows PowerShell ISE”** 控制台中运行以下命令，为 MSIX 打包准备操作系统：
 
    ```powershell
@@ -248,7 +248,7 @@ lab:
    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
    ```
 
-1. Hyper-V 组件安装完成后，键入 **Y** 并按 **Enter** 键，以重启操作系统。重启后，使用 **ADATUM\wvdadmin1** 帐户以及创建此用户帐户时设置的密码登录。
+1. Hyper-V 组件安装完成后，键入 **Y** 并按 **Enter** 键，以重启操作系统。重启后，使用 **wvdadmin1** 帐户和 **Pa55w.rd1234** 密码重新登录。
 
 #### 任务 2：创建 MSIX 应用附加映像
 

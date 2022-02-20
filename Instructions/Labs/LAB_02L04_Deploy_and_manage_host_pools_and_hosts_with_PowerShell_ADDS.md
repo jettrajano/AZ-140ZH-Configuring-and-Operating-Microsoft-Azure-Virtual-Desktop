@@ -142,6 +142,9 @@ lab:
 #### 任务 3：使用 PowerShell 对运行 Windows 10 企业版的 Azure VM 执行基于模板的部署
 
 1. 在实验室计算机上，使用与 **az140-dc-vm11** Azure VM 的远程桌面会话，将实验室文件 **“\\\\AZ-140\\AllFiles\\Labs\\02\\az140-24_azuredeployhp3.json”** 和 **“\\\\AZ-140\\AllFiles\\Labs\\02\\az140-24_azuredeployhp3.parameters.json”** 复制到 **“C:\\AllFiles\\Labs\\02”** 文件夹（如果需要请创建）。
+
+>**备注：** 如果在将文件从实验室计算机传输到嵌套虚拟机时遇到问题，可以在实验室计算机上的 Azure 门户中将这 2 个文件上传到在上一个实验室中创建的 **az140-22-profiles** 文件共享。将文件上传到共享后，只需转到 **az140-dc-vm1**，然后在 Azure 门户中，从那里的文件共享中下载文件到本地。
+
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 控制台，运行以下命令部署运行 Windows 10 企业版（多会话）的 Azure VM，该 VM 将用作在前面的任务中创建的主机池中的 Azure 虚拟桌面会话主机：
 
    ```powershell
@@ -183,6 +186,8 @@ lab:
    $labFilesFolder = 'C:\AllFiles\Labs\02'
    New-Item -ItemType Directory -Path $labFilesFolder
    ```
+
+>**备注** 当使用 [T] 构造复制 PowerShell cmdlet 时，请谨慎操作。在某些情况下，复制过来的文本可能不正确，例如 $ 符号显示为数字字符 4。在发出 cmdlet 之前，需要更正这些问题。复制到 PowerShell ISE **脚本**窗格，在那里进行更正，然后突出显示更正的文本并按 **F8（运行选择）**。
 
 1. 在与 **az140-24-p3-0** 的远程桌面会话中，从 **“管理员: Windows PowerShell ISE”** 脚本窗格，运行以下命令下载 Azure 虚拟桌面代理和启动加载器安装程序（将会话主机添加到主机池必需的操作）：
 

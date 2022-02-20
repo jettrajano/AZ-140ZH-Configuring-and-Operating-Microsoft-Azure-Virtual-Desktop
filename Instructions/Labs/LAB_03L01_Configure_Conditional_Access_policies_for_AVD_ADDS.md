@@ -104,10 +104,11 @@ lab:
    |密码|**Pa55w.rd1234**|
 
 1. 在与 **az140-dc-vm11** 的远程桌面会话中，在“**开始**”菜单中展开 **Azure AD Connect** 文件夹，并选择“**Azure AD Connect**”。
-1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“欢迎使用 Azure AD Connect”** 页上，选择 **“配置”**。
-1. 在 **“Microsoft Azure Active Directory Connect”** 窗口的 **“其他任务”** 页上，选择 **“配置设备选项”**，并选择 **“下一步”**。
-1. 在 **“Microsoft Azure Active Directory Connect”** 窗口中的 **“概述”** 页上，查看与 **“混合 Azure AD 联接”** 和 **“设备写回”** 相关的信息，并选择 **“下一步”**。
-1. 在 **“Microsoft Azure Active Directory Connect”** 窗口中的 **“连接到 Azure AD”** 页上，使用在前面的练习中创建的用户帐户 **“aadsyncuser”** 的凭据进行身份验证，然后选择 **“下一步”**。 
+> **备注** 如果收到同步服务未运行的失败错误窗口，请转到 PowerShell 命令窗口并输入“**Start-Service "ADSync"**”，然后再次尝试步骤 4。
+3. 在“**Microsoft Azure Active Directory Connect**”窗口的“**欢迎使用 Azure AD Connect**”页上，选择“**配置**”。
+4. 在“**Microsoft Azure Active Directory Connect**”窗口的“**其他任务**”页上，选择“**配置设备选项**”，并选择“**下一步**”。
+5. 在“**Microsoft Azure Active Directory Connect**”窗口中的“**概述**”页上，查看与“**混合 Azure AD 联接**”和“**设备写回**”相关的信息，并选择“**下一步**”。
+6. 在“**Microsoft Azure Active Directory Connect**”窗口中的“**连接到 Azure AD**”页上，使用在前面的练习中创建的用户帐户“**aadsyncuser**”的凭据进行身份验证，然后选择“**下一步**”。  
 
    > **备注**： 提供之前在本实验室记录的 **aadsyncuser** 帐户的 userPrincipalName 属性，并指定使用你创建此用户帐户时设置的密码。 
 
@@ -175,7 +176,7 @@ lab:
 
 1. 在实验室计算机上显示 Azure 门户的 web 浏览器中，导航回 Azure AD 租户的 **“概述”** 边栏选项卡，并在左侧垂直菜单的 **“管理”** 部分中，单击 **“安全性”**。
 1. 在 **“安全性 \| 启动”** 边栏选项卡上左侧垂直菜单栏的 **“保护”** 部分中，单击 **“条件访问”**。
-1. 在 **“条件访问 \| 策略”** 边栏选项卡上的工具栏中，单击 **“新建策略”**。 
+1. 在“**条件访问 \| 策略**”边栏选项卡上，在工具栏中单击“**+ 新建策略**”，然后在上下文菜单中选择“**新建策略**”。
 1. 在 **“新建”** 边栏选项卡上，配置以下设置：
 
    - 在 **“名称”** 文本框中键入 **“az140-31-wvdpolicy1”**
